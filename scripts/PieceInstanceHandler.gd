@@ -5,11 +5,12 @@ var value_label
 var next_position
 var delete_after_move = false
 
-func init(value: int, board_position: Vector2):
+func init(board_position: Vector2, value: int):
 	piece = Piece.new(board_position, value)
 	value_label = get_child(1)
 	set_value(value)
 	position = board_position
+	next_position = position
 	
 	
 func set_value(value):

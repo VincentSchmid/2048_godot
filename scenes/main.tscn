@@ -25,5 +25,5 @@ rect_pivot_offset = Vector2( 264, 96 )
 color = Color( 0.156863, 0.152941, 0.152941, 1 )
 script = ExtResource( 10 )
 
-[node name="Pieces" type="Node" parent="."]
+[node name="Pieces" type="Node" parent="Controller"]
 script = ExtResource( 11 )
