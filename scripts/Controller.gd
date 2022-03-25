@@ -23,29 +23,32 @@ func _ready() -> void:
 	map.draw_board()
 	
 func on_swipe(swipe_direction):
+	print(swipe_direction)
 	var check_columns = false
 	var check_in_order = false
 	
-	var direction = Enums.swipe_to_dir(swipe_direction)
-	
-	match direction:
+	match swipe_direction:
 		
-		Enums.Direction.LEFT:
+		Enums.SwipeDirection.SWIPE_LEFT:
+			print("left")
 			check_columns = true
 			check_in_order = true
 			continue
 			
-		Enums.Direction.RIGHT:
+		Enums.SwipeDirection.SWIPE_RIGHT:
+			print("right")
 			check_columns = true
 			check_in_order = false
 			continue
 		
-		Enums.Direction.UP:
+		Enums.SwipeDirection.SWIPE_UP:
+			print("up")
 			check_columns = false
 			check_in_order = true
 			continue
 			
-		Enums.Direction.DOWN:
+		Enums.SwipeDirection.SWIPE_DOWN:
+			print("down")
 			check_columns = false
 			check_in_order = false
 			continue
@@ -58,7 +61,7 @@ func on_swipe(swipe_direction):
 			for y in range(col.size()):
 				var piece = col[y]
 				if piece != null:
-					move(Vector2(x, y), piece, direction)
+					move(Vector2(x, y), piece, swipe_direction)
 	
 	else:
 		for y in check_order:
@@ -66,7 +69,7 @@ func on_swipe(swipe_direction):
 			for x in range(row.size):
 				var piece = row[x]
 				if piece != null:
-					move(Vector2(x, y), piece, direction)
+					move(Vector2(x, y), piece, swipe_direction)
 
 	draw()
 
@@ -108,17 +111,20 @@ func draw():
 		place_piece(new_piece["position"], new_piece["value"])
 
 func get_global_position(board_position) -> Vector2:
-	return Vector2(MAP_PIXEL_SIZE - (2*MARGIN) / MAP_SIZE * (board_position.x + 1), 1.0 *MAP_PIXEL_SIZE - (2*MARGIN) / MAP_SIZE * (board_position.y + 1))
+	return Vector2(MARGIN + (MAP_PIXEL_SIZE - (2*MARGIN)) / MAP_SIZE * board_position.x,
+	MARGIN + 1.0 * (MAP_PIXEL_SIZE - (2*MARGIN)) / MAP_SIZE * board_position.y)
 
 func get_check_array(direction):
-	if direction == Enums.Direction.UP:
+	if direction == Enums.SwipeDirection.SWIPE_UP:
 		check_direction = Vector2(0, -1)
 	
-	elif direction == Enums.Direction.DOWN:
+	elif direction == Enums.SwipeDirection.SWIPE_DOWN:
 		check_direction = Vector2(0, 1)	
 
-	elif direction == Enums.Direction.LEFT:
+	elif direction == Enums.SwipeDirection.SWIPE_LEFT:
 		check_direction = Vector2(-1, 0)
 
-	elif direction == Enums.Direction.RIGHT:
+	elif direction == Enums.SwipeDirection.SWIPE_RIGHT:
 		check_direction = Vector2(1, 0)
+	
+	return check_direction

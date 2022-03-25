@@ -4,6 +4,8 @@ var piece: Piece
 var value_label
 var next_position
 var delete_after_move = false
+var value
+var has_merged = false
 
 func init(board_position: Vector2, value: int):
 	piece = Piece.new(board_position, value)
@@ -12,10 +14,15 @@ func init(board_position: Vector2, value: int):
 	position = board_position
 	next_position = position
 	
-	
-func set_value(value):
-	piece.change_value(value)
-	value_label.set_value(value)
+func set_merge_state(new_has_merged):
+	has_merged = new_has_merged
+	piece.has_merged = new_has_merged
+
+
+func set_value(new_value):
+	value = new_value
+	piece.change_value(new_value)
+	value_label.set_value(new_value)
 
 func move():
 	position = next_position

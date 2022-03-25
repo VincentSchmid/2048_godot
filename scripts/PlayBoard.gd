@@ -63,10 +63,6 @@ func remove_piece(position: Vector2):
 
 func is_free(position: Vector2) -> bool:
 	return get_piece(position) == null
-
-func get_global_position(board_position):
-	return Vector2(_margin + _size - (2*_margin) / _map_size * board_position.x, 
-	_margin + _size - (2*_margin) / _map_size * board_position.y)
 	
 func draw_board():
 	for col in map:
