@@ -10,7 +10,7 @@ const POSSIBLE_STARING_PIECES = [2, 4]
 onready var SwipeHandler = get_node("SwipeHandler")
 onready var map = get_node("Board")
 onready var piece_factory = get_node("Pieces")
-onready var gameStartStrat = RandomMap.new()
+onready var mapPopulateStrat = RandomMap.new()
 
 var check_direction
 var new_piece_values = []
@@ -72,7 +72,7 @@ func on_swipe(swipe_direction):
 	draw()
 
 func start_game():
-	var value_map = gameStartStrat.populate_map(MAP_SIZE,
+	var value_map = mapPopulateStrat.populate_map(MAP_SIZE,
 												STARTING_PIECE_COUNT,
 												POSSIBLE_STARING_PIECES)
 
