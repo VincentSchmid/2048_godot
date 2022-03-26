@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const SPEED = 15000
+const SPEED = 6000
 
 var piece: Piece
 var value_label

@@ -1,14 +1,15 @@
 extends Node
 
 const MAP_SIZE = 4
+const PIECE_SIZE = 200
+const MARGIN = 50.0
+const STARTING_PIECE_COUNT = 2
+const POSSIBLE_STARING_PIECES = [2, 4]
+const ADD_PIECE_AFTER_MOVE = true
+
 var WINDOW_HEIGHT = ProjectSettings.get_setting("display/window/size/height")
 var WINDOW_WIDTH = ProjectSettings.get_setting("display/window/size/width")
 var MAP_PIXEL_SIZE = WINDOW_WIDTH
-const PIECE_SIZE = 200
-const MARGIN = 50.0
-const STARTING_PIECE_COUNT = 12
-const POSSIBLE_STARING_PIECES = [2, 4]
-const ADD_PIECE_AFTER_MOVE = true
 
 onready var SwipeHandler = get_node("SwipeHandler")
 onready var map = get_node("Board")
@@ -17,6 +18,7 @@ onready var mapPopulateStrat = RandomMap.new()
 
 var check_direction
 var new_piece_values = []
+var piece_has_moved = false
 
 func _ready() -> void:
 	SwipeHandler.connect("swiped", self, "on_swipe")
@@ -68,7 +70,8 @@ func on_swipe(swipe_direction):
 					move(Vector2(x, y), piece, swipe_direction)
 
 	draw()
-	if ADD_PIECE_AFTER_MOVE:
+	if ADD_PIECE_AFTER_MOVE and piece_has_moved:
+		piece_has_moved = false
 		place_random_piece()
 
 func start_game():
@@ -83,9 +86,11 @@ func move(board_position: Vector2, piece, direction):
 	check_direction = get_check_array(direction)
 
 	while map.is_free(next_board_position + check_direction):
+		piece_has_moved = true
 		next_board_position += check_direction
 
 	if map.is_mergeable(next_board_position + check_direction, piece.value):
+		piece_has_moved = true
 		next_board_position += check_direction
 		merge(piece, map.get_piece(next_board_position), next_board_position)
 
