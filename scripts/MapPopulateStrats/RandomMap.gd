@@ -3,10 +3,8 @@ extends MapPopulateStrategy
 
 class_name RandomMap
 
-var map
-
 func populate_map(map_size: int, piece_count: int, starting_pieces: Array) -> Array:
-	map = .get_empty_map(map_size)
+	var map = .get_empty_map(map_size)
 	
 	for piece in piece_count:
 		var rnd_value = .rand_val(starting_pieces)

@@ -54,7 +54,7 @@ func on_swipe(swipe_direction):
 	var check_order = range(MAP_SIZE) if check_in_order else range(MAP_SIZE, 0)
 	
 	if check_columns:
-		for x in check_order:
+		for x in check_order: # could run in parallel
 			var col = map.get_column(x)
 			for y in range(col.size()):
 				var piece = col[y]
@@ -62,7 +62,7 @@ func on_swipe(swipe_direction):
 					move(Vector2(x, y), piece, swipe_direction)
 	
 	else:
-		for y in check_order:
+		for y in check_order: # could run in parallel
 			var row = map.get_row(y)
 			for x in range(row.size()):
 				var piece = row[x]
@@ -79,8 +79,8 @@ func start_game():
 	place_pieces(value_map)
 
 func move(board_position: Vector2, piece, direction):
-	check_direction = get_check_array(direction)
 	var next_board_position = board_position
+	check_direction = get_check_array(direction)
 
 	while map.is_free(next_board_position + check_direction):
 		next_board_position += check_direction
@@ -92,10 +92,11 @@ func move(board_position: Vector2, piece, direction):
 	piece.next_position = get_global_position(next_board_position)
 	map.move_piece(board_position, next_board_position)
 
-func merge(piece1, piece2, board_position):
-	piece1.delete_after_move = true
-	piece2.delete_after_move = true
-	new_piece_values.append({"position": board_position, "value": piece1.value * 2})
+func merge(moving_piece, stationary_piece, board_position):
+	moving_piece.delete_after_move = true
+	stationary_piece.delete_after_move = true
+	moving_piece.set_value(moving_piece.value * 2)
+	new_piece_values.append({"position": board_position, "value": stationary_piece.value * 2})
 
 func place_pieces(value_map: Array):
 	for y in value_map.size():
