@@ -26,6 +26,7 @@ func set_value(new_value):
 
 func move():
 	position = next_position
+	has_merged = false
 	if delete_after_move:
 		delete()
 

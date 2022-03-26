@@ -5,7 +5,7 @@ extends Node
 var first_touch = Vector2(0, 0);
 
 const ANGLE_TOLERANCE_PERCENTAGE = 20;
-const MIN_DRAG_DISTANCE = 25;
+const MIN_DRAG_DISTANCE = 100;
 
 const DIRECTION_LEFT = 90;
 const DIRECTION_RIGHT = -90;

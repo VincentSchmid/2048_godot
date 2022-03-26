@@ -64,8 +64,22 @@ func is_on_map(position: Vector2) -> bool:
 	
 	return (x >= 0 && x < _map_size) && (y >= 0 && y < _map_size)
 	
+func get_random_position() -> Vector2:
+	return Vector2(rng.randi_range(0, _map_size-1), rng.randi_range(0, _map_size-1))
+
+func get_random_free_position() -> Vector2:
+	var random_position = get_random_position()
+	while not is_free(random_position):
+		random_position = get_random_position()
+	
+	return random_position
+
+	
 func draw_board():
 	for col in map:
 		for piece in col:
 			if piece != null:
-				piece.move()
+				if piece.delete_after_move:
+					piece.queue_free()
+				else:
+					piece.move()

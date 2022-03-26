@@ -10,7 +10,7 @@ const POSSIBLE_STARING_PIECES = [2, 4]
 onready var SwipeHandler = get_node("SwipeHandler")
 onready var map = get_node("Board")
 onready var piece_factory = get_node("Pieces")
-onready var mapPopulateStrat = MergeTest.new()
+onready var mapPopulateStrat = RandomMap.new()
 
 var check_direction
 var new_piece_values = []
@@ -19,7 +19,6 @@ func _ready() -> void:
 	SwipeHandler.connect("swiped", self, "on_swipe")
 	map.init_map(MAP_SIZE)
 	start_game()
-	map.draw_board()
 	
 func on_swipe(swipe_direction):
 	var check_columns = false
@@ -70,6 +69,7 @@ func on_swipe(swipe_direction):
 					move(Vector2(x, y), piece, swipe_direction)
 
 	draw()
+	place_random_piece()
 
 func start_game():
 	var value_map = mapPopulateStrat.populate_map(MAP_SIZE,
@@ -93,10 +93,15 @@ func move(board_position: Vector2, piece, direction):
 	map.move_piece(board_position, next_board_position)
 
 func merge(moving_piece, stationary_piece, board_position):
-	moving_piece.delete_after_move = true
-	stationary_piece.delete_after_move = true
+	stationary_piece.queue_free()
 	moving_piece.set_value(moving_piece.value * 2)
-	new_piece_values.append({"position": board_position, "value": stationary_piece.value * 2})
+	moving_piece.has_merged = true
+
+func place_random_piece():
+	var rng = RandomNumberGenerator.new()
+	var rnd_value = POSSIBLE_STARING_PIECES[rng.randi_range(0, POSSIBLE_STARING_PIECES.size()-1)]
+	place_piece(map.get_random_free_position(), rnd_value)
+
 
 func place_pieces(value_map: Array):
 	for y in value_map.size():
