@@ -41,6 +41,9 @@ func get_piece(position: Vector2):
 	return map[position.y][position.x]
 	
 func is_mergeable(position: Vector2, value) -> bool:
+	if not is_on_map(position):
+		return false
+	
 	var piece = get_piece(position)
 	
 	if piece == null:

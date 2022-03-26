@@ -51,7 +51,7 @@ func on_swipe(swipe_direction):
 			check_in_order = false
 			continue
 	
-	var check_order = range(MAP_SIZE) if check_in_order else range(MAP_SIZE, 0)
+	var check_order = range(MAP_SIZE) if check_in_order else range(MAP_SIZE-1, -1, -1)
 	
 	if check_columns:
 		for x in check_order: # could run in parallel
