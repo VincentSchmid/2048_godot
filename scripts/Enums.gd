@@ -7,14 +7,3 @@ enum SwipeDirection {
 	SWIPE_RIGHT,
 	NONE
 }
-
-enum Direction {
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT,
-	NONE
-}
-
-static func swipe_to_dir(swipeDirection):
-	return Direction.get(int(swipeDirection))
