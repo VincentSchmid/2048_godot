@@ -10,6 +10,8 @@ var map: Array = []
 var garbage_pieces = []
 onready var rng = RandomNumberGenerator.new()
 
+var _moving = []
+
 func init_map(map_size):
 	_map_size = map_size
 	rng.randomize()
@@ -78,13 +80,16 @@ func draw_board():
 	for col in map:
 		for piece in col:
 			if piece != null:
-				if piece.delete_after_move:
-					piece.queue_free()
-				else:
 					piece.move()
+					wait_for_move_complete(piece)
 	
-	clear_garbage()
+func wait_for_move_complete(piece):
+	_moving.append(1)
+	yield(piece, "arrived")
+	_moving.pop_front()
 	
+	if _moving == []:
+		clear_garbage()
 
 func clear_garbage():
 	for piece in garbage_pieces:
