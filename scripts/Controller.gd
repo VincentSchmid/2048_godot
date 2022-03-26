@@ -108,7 +108,6 @@ func place_random_piece():
 	var rnd_value = POSSIBLE_STARING_PIECES[rng.randi_range(0, POSSIBLE_STARING_PIECES.size()-1)]
 	place_piece(map.get_random_free_position(), rnd_value)
 
-
 func place_pieces(value_map: Array):
 	for y in value_map.size():
 		for x in value_map[y].size():
@@ -118,7 +117,7 @@ func place_pieces(value_map: Array):
 
 func place_piece(board_position: Vector2, value: int):
 	var piece = piece_factory.create_piece(get_global_position(board_position), value)
-	map.set_piece(piece, board_position)
+	map.set_piece(board_position, piece)
 
 func draw():
 	map.draw_board()

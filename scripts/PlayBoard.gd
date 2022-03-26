@@ -32,10 +32,10 @@ func get_row(index):
 
 func move_piece(from_position: Vector2, to_position: Vector2 ):
 	if from_position != to_position:
-		map[to_position.y][to_position.x] = map[from_position.y][from_position.x]
+		set_piece(to_position, get_piece(from_position))
 		map[from_position.y][from_position.x] = null
 
-func set_piece(piece, position: Vector2):
+func set_piece(position: Vector2, piece):
 	map[position.y][position.x] = piece
 
 func get_piece(position: Vector2):
@@ -74,7 +74,6 @@ func get_random_free_position() -> Vector2:
 	
 	return random_position
 
-	
 func draw_board():
 	for col in map:
 		for piece in col:

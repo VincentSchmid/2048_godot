@@ -18,16 +18,11 @@ func init(board_position: Vector2, value: int):
 	position = board_position
 	next_position = position
 	
-func set_merge_state(new_has_merged):
-	has_merged = new_has_merged
-	piece.has_merged = new_has_merged
-	
 func _process(delta):
 	if is_moving:
 		position = position.move_toward(next_position, delta * SPEED)
 		if position.is_equal_approx(next_position):
 			is_moving = false
-
 
 func set_value(new_value):
 	value = new_value
@@ -37,8 +32,3 @@ func set_value(new_value):
 func move():
 	is_moving = true
 	has_merged = false
-	if delete_after_move:
-		delete()
-
-func delete():
-	queue_free()
