@@ -7,6 +7,7 @@ class_name PlayBoard
 var _map_size
 var placed_pieces = 0
 var map: Array = []
+var garbage_pieces = []
 onready var rng = RandomNumberGenerator.new()
 
 func init_map(map_size):
@@ -51,9 +52,8 @@ func is_mergeable(position: Vector2, value) -> bool:
 		
 	return not piece.has_merged and piece.value == value
 	
-func remove_piece(position: Vector2):
-	get_piece(position).queue_free()
-	map[position.y][position.x] = null
+func remove_piece(piece):
+	garbage_pieces.append(piece)
 
 func is_free(position: Vector2) -> bool:
 	return is_on_map(position) && get_piece(position) == null
@@ -83,3 +83,11 @@ func draw_board():
 					piece.queue_free()
 				else:
 					piece.move()
+	
+	clear_garbage()
+	
+
+func clear_garbage():
+	for piece in garbage_pieces:
+		piece.queue_free()
+	garbage_pieces = []

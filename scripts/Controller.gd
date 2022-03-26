@@ -8,6 +8,7 @@ const PIECE_SIZE = 200
 const MARGIN = 50.0
 const STARTING_PIECE_COUNT = 12
 const POSSIBLE_STARING_PIECES = [2, 4]
+const ADD_PIECE_AFTER_MOVE = true
 
 onready var SwipeHandler = get_node("SwipeHandler")
 onready var map = get_node("Board")
@@ -67,7 +68,8 @@ func on_swipe(swipe_direction):
 					move(Vector2(x, y), piece, swipe_direction)
 
 	draw()
-	place_random_piece()
+	if ADD_PIECE_AFTER_MOVE:
+		place_random_piece()
 
 func start_game():
 	var value_map = mapPopulateStrat.populate_map(MAP_SIZE,
@@ -91,7 +93,7 @@ func move(board_position: Vector2, piece, direction):
 	map.move_piece(board_position, next_board_position)
 
 func merge(moving_piece, stationary_piece, board_position):
-	stationary_piece.queue_free()
+	map.remove_piece(stationary_piece)
 	moving_piece.set_value(moving_piece.value * 2)
 	moving_piece.has_merged = true
 
