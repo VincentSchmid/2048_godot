@@ -1,7 +1,9 @@
 extends Node
 
 const MAP_SIZE = 4
-const MAP_PIXEL_SIZE = 1170
+var WINDOW_HEIGHT = ProjectSettings.get_setting("display/window/size/height")
+var WINDOW_WIDTH = ProjectSettings.get_setting("display/window/size/width")
+var MAP_PIXEL_SIZE = WINDOW_WIDTH
 const PIECE_SIZE = 200
 const MARGIN = 50.0
 const STARTING_PIECE_COUNT = 12
@@ -27,25 +29,21 @@ func on_swipe(swipe_direction):
 	match swipe_direction:
 		
 		Enums.SwipeDirection.SWIPE_LEFT:
-			print("left")
 			check_columns = true
 			check_in_order = true
 			continue
 			
 		Enums.SwipeDirection.SWIPE_RIGHT:
-			print("right")
 			check_columns = true
 			check_in_order = false
 			continue
 		
 		Enums.SwipeDirection.SWIPE_UP:
-			print("up")
 			check_columns = false
 			check_in_order = true
 			continue
 			
 		Enums.SwipeDirection.SWIPE_DOWN:
-			print("down")
 			check_columns = false
 			check_in_order = false
 			continue
@@ -99,6 +97,7 @@ func merge(moving_piece, stationary_piece, board_position):
 
 func place_random_piece():
 	var rng = RandomNumberGenerator.new()
+	rng.randomize()
 	var rnd_value = POSSIBLE_STARING_PIECES[rng.randi_range(0, POSSIBLE_STARING_PIECES.size()-1)]
 	place_piece(map.get_random_free_position(), rnd_value)
 
@@ -121,7 +120,7 @@ func draw():
 
 func get_global_position(board_position) -> Vector2:
 	return Vector2(MARGIN + (MAP_PIXEL_SIZE - (2*MARGIN)) / MAP_SIZE * board_position.x,
-				   MARGIN + (MAP_PIXEL_SIZE - (2*MARGIN)) / MAP_SIZE * board_position.y)
+				  ((WINDOW_HEIGHT - MAP_PIXEL_SIZE) / 2) + MARGIN + (MAP_PIXEL_SIZE - (2*MARGIN)) / MAP_SIZE * board_position.y)
 
 func get_check_array(direction):
 	if direction == Enums.SwipeDirection.SWIPE_UP:

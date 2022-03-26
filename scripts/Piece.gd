@@ -8,7 +8,6 @@ var next_board_position = Vector2(0, 0)
 var value = 0
 var has_merged = false
 var check_direction = Vector2(0, 0)
-#onready var map = get_node("../PlayBoard")
 
 func _init(new_board_position, new_value):
 	board_position = new_board_position
@@ -40,7 +39,6 @@ func change_value(new_value):
 
 func merge(direction):
 	move_to_next_tile(direction)
-	# map.remove_piece(next_board_position)
 	increment_value()
 	has_merged = true
 

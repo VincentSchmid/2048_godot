@@ -17,11 +17,3 @@ func draw(map):
 		for piece in col:
 			if piece != null:
 				piece.position = get_global_position(piece.next_board_position)
-
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
