@@ -1,6 +1,6 @@
 extends Node
 
-class_name GameStartStrategy
+class_name RandomMap
 
 
 var rng = RandomNumberGenerator.new()

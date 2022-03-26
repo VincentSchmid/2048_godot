@@ -10,7 +10,7 @@ const POSSIBLE_STARING_PIECES = [2, 4]
 onready var SwipeHandler = get_node("SwipeHandler")
 onready var map = get_node("Board")
 onready var piece_factory = get_node("Pieces")
-onready var gameStartStrat = GameStartStrategy.new()
+onready var gameStartStrat = RandomMap.new()
 
 var check_direction
 var new_piece_values = []
