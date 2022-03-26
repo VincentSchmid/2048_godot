@@ -1,56 +1,31 @@
-extends Node
+extends KinematicBody2D
 
 
-class_name Piece
+const SPEED = 600
 
-var board_position = Vector2(0, 0)
-var next_board_position = Vector2(0, 0)
-var value = 0
+var value_label
+var next_position
+var delete_after_move = false
+var value
 var has_merged = false
-var check_direction = Vector2(0, 0)
+var is_moving = false
 
-func _init(new_board_position, new_value):
-	board_position = new_board_position
-
-func _ready():
-	pass # Replace with function body.
-
-func init_move(direction):
-	next_board_position = board_position
-	check_direction = get_check_array(direction)
-
-func next_tile_is_free(direction):
-	check_direction = get_check_array(direction)
-	return true # map.is_free(next_board_position + check_direction)
-
-func move_to_next_tile(direction):
-	check_direction = get_check_array(direction)
-	next_board_position += check_direction
-
-func next_piece_is_mergable(direction):
-	check_direction = get_check_array(direction)
-	return true # map.is_mergeable(next_board_position + check_direction, value)
-
-func increment_value():
-	change_value(value * 2)
+func init(board_position: Vector2, value: int):
+	value_label = get_child(1)
+	set_value(value)
+	position = board_position
+	next_position = position
 	
-func change_value(new_value):
+func _process(delta):
+	if is_moving:
+		position = position.move_toward(next_position, delta * SPEED)
+		if position.is_equal_approx(next_position):
+			is_moving = false
+
+func set_value(new_value):
 	value = new_value
+	value_label.set_value(new_value)
 
-func merge(direction):
-	move_to_next_tile(direction)
-	increment_value()
-	has_merged = true
-
-func get_check_array(direction):
-	if direction == Enums.Direction.UP:
-		check_direction = Vector2(0, -1)
-	
-	elif direction == Enums.Direction.DOWN:
-		check_direction = Vector2(0, 1)	
-
-	elif direction == Enums.Direction.LEFT:
-		check_direction = Vector2(-1, 0)
-
-	elif direction == Enums.Direction.RIGHT:
-		check_direction = Vector2(1, 0)
+func move():
+	is_moving = true
+	has_merged = false

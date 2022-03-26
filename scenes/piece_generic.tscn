@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://scripts/PieceInstanceHandler.gd" type="Script" id=1]
+[ext_resource path="res://scripts/Piece.gd" type="Script" id=1]
 [ext_resource path="res://font/firaCode_bold.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scenes/Piece_value.gd" type="Script" id=3]
 

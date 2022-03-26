@@ -1,5 +1,6 @@
 extends Node
 
+# Returns starting map arrays
 
 class_name MapPopulateStrategy
 

@@ -76,9 +76,9 @@ func on_swipe(swipe_direction):
 
 func start_game():
 	var value_map = mapPopulateStrat.populate_map(MAP_SIZE,
-												STARTING_PIECE_COUNT,
-												POSSIBLE_STARING_PIECES)
-
+		STARTING_PIECE_COUNT,
+		POSSIBLE_STARING_PIECES)
+	
 	place_pieces(value_map)
 
 func move(board_position: Vector2, piece, direction):
