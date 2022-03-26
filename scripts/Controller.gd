@@ -10,7 +10,7 @@ const POSSIBLE_STARING_PIECES = [2, 4]
 onready var SwipeHandler = get_node("SwipeHandler")
 onready var map = get_node("Board")
 onready var piece_factory = get_node("Pieces")
-onready var mapPopulateStrat = RandomMap.new()
+onready var mapPopulateStrat = MergeTest.new()
 
 var check_direction
 var new_piece_values = []
@@ -115,7 +115,7 @@ func draw():
 
 func get_global_position(board_position) -> Vector2:
 	return Vector2(MARGIN + (MAP_PIXEL_SIZE - (2*MARGIN)) / MAP_SIZE * board_position.x,
-	MARGIN + 1.0 * (MAP_PIXEL_SIZE - (2*MARGIN)) / MAP_SIZE * board_position.y)
+				   MARGIN + (MAP_PIXEL_SIZE - (2*MARGIN)) / MAP_SIZE * board_position.y)
 
 func get_check_array(direction):
 	if direction == Enums.SwipeDirection.SWIPE_UP:
