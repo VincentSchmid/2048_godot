@@ -1,29 +1,27 @@
 extends Node
 
 const MAP_SIZE = 4
-const MAP_PIXEL_SIZE = 1770
+const MAP_PIXEL_SIZE = 1170
+const PIECE_SIZE = 200
 const MARGIN = 50.0
-const STARTING_PIECE_COUNT = 2
+const STARTING_PIECE_COUNT = 12
 const POSSIBLE_STARING_PIECES = [2, 4]
 
 onready var SwipeHandler = get_node("SwipeHandler")
 onready var map = get_node("Board")
 onready var piece_factory = get_node("Pieces")
+onready var gameStartStrat = GameStartStrategy.new()
 
 var check_direction
 var new_piece_values = []
 
-class_name Controller
-
-
 func _ready() -> void:
 	SwipeHandler.connect("swiped", self, "on_swipe")
-	map.init_map()
+	map.init_map(MAP_SIZE)
 	start_game()
 	map.draw_board()
 	
 func on_swipe(swipe_direction):
-	print(swipe_direction)
 	var check_columns = false
 	var check_in_order = false
 	
@@ -66,7 +64,7 @@ func on_swipe(swipe_direction):
 	else:
 		for y in check_order:
 			var row = map.get_row(y)
-			for x in range(row.size):
+			for x in range(row.size()):
 				var piece = row[x]
 				if piece != null:
 					move(Vector2(x, y), piece, swipe_direction)
@@ -74,8 +72,11 @@ func on_swipe(swipe_direction):
 	draw()
 
 func start_game():
-	for count in STARTING_PIECE_COUNT:
-		place_random_piece()
+	var value_map = gameStartStrat.populate_map(MAP_SIZE,
+												STARTING_PIECE_COUNT,
+												POSSIBLE_STARING_PIECES)
+
+	place_pieces(value_map)
 
 func move(board_position: Vector2, piece, direction):
 	check_direction = get_check_array(direction)
@@ -95,11 +96,13 @@ func merge(piece1, piece2, board_position):
 	piece1.delete_after_move = true
 	piece2.delete_after_move = true
 	new_piece_values.append({"position": board_position, "value": piece1.value * 2})
-	
-func place_random_piece():
-	var rng = RandomNumberGenerator.new()
-	var rnd_value = POSSIBLE_STARING_PIECES[rng.randi_range(0, POSSIBLE_STARING_PIECES.size()-1)]
-	place_piece(map.get_random_free_position(), rnd_value)
+
+func place_pieces(value_map: Array):
+	for y in value_map.size():
+		for x in value_map[y].size():
+			var value = value_map[y][x]
+			if value > 0:
+				place_piece(Vector2(x, y), value)
 
 func place_piece(board_position: Vector2, value: int):
 	var piece = piece_factory.create_piece(get_global_position(board_position), value)

@@ -4,17 +4,13 @@ class_name PlayBoard
 
 # [0, 0] is top left
 
-const STARTING_PIECES = 2
-const POSSIBLE_STARING_PIECES = [2, 4]
-
-var _map_size = 4
+var _map_size
 var placed_pieces = 0
-var _size = 1170
-var _margin = 100
 var map: Array = []
 onready var rng = RandomNumberGenerator.new()
 
-func init_map():
+func init_map(map_size):
+	_map_size = map_size
 	rng.randomize()
 	
 	map = [];
@@ -32,16 +28,6 @@ func get_column(index):
 
 func get_row(index):
 	return map[index]
-	
-func get_random_position() -> Vector2:
-	return Vector2(rng.randi_range(0, _map_size-1), rng.randi_range(0, _map_size-1))
-
-func get_random_free_position() -> Vector2:
-	var random_position = get_random_position()
-	while not is_free(random_position):
-		random_position = get_random_position()
-	
-	return random_position
 
 func move_piece(from_position, to_position):
 	map[to_position.y][to_position.x] = map[from_position.y][from_position.x]
