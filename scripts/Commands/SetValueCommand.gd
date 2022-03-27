@@ -1,4 +1,4 @@
-extends Node
+extends Command
 
 
 class_name SetValueCommand

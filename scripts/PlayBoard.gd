@@ -86,23 +86,8 @@ func get_random_free_position() -> Vector2:
 		random_position = get_random_position()
 	
 	return random_position
-
-func draw_board():
-	for col in map:
-		for piece in col:
-			if piece != null:
-					piece.move()
-					wait_for_move_complete(piece)
 	
 func wait_for_move_complete(piece):
 	_moving.append(1)
 	yield(piece, "arrived")
 	_moving.pop_front()
-	
-	if _moving == []:
-		clear_garbage()
-
-func clear_garbage():
-	for piece in garbage_pieces:
-		piece.queue_free()
-	garbage_pieces = []

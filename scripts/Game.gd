@@ -7,10 +7,11 @@ var _map: PlayBoard
 var _add_piece_after_move: bool
 var _map_size: int
 var _check_direction: Vector2
-var _command_stack: Array
+var _commandHandler: CommandHandler
 var _piece_parent: Node
 var _piece_has_moved = false
 var _possible_starting_pieces: Array
+var _turnCommand: TurnCommand
 
 var processing_stack: Array
 
@@ -19,7 +20,7 @@ func _init(
 	add_piece_after_move: bool,
 	map: PlayBoard,
 	map_size: int,
-	command_stack: Array,
+	commandHandler: CommandHandler,
 	piece_parent: Node):
 
 	_possible_starting_pieces = possible_starting_pieces
@@ -27,10 +28,11 @@ func _init(
 	_map = map
 	_map_size = map_size
 	_piece_parent = piece_parent
-	_command_stack = command_stack
+	_commandHandler = commandHandler
 
 func move_phase(direction):
 	populate_processing_stack(direction)
+	_turnCommand = TurnCommand.new()
 
 	for i in processing_stack.size():
 		var board_position = processing_stack[i]["board_position"]
@@ -46,7 +48,7 @@ func move_phase(direction):
 			next_board_position += _check_direction
 		
 		if board_position != next_board_position:
-			_command_stack.push_back(MoveCommand.new(
+			_turnCommand.add(MoveCommand.new(
 				board_position,
 				next_board_position,
 				piece,
@@ -60,7 +62,7 @@ func move_phase(direction):
 		if _map.is_mergeable(next_board_position, piece.value):
 			_piece_has_moved = true
 			
-			_command_stack.push_back(MergeCommand.new(board_position, 
+			_turnCommand.add(MergeCommand.new(board_position, 
 				next_board_position, 
 				piece, 
 				_map.get_piece(next_board_position),
@@ -79,12 +81,14 @@ func post_turn_phase():
 	
 	if _piece_has_moved and _add_piece_after_move:
 		_piece_has_moved = false
-		_command_stack.push_back(AddPieceCommand.new(
+		_turnCommand.add(AddPieceCommand.new(
 			_map.get_random_free_position(),
 			get_random_value(),
 			_piece_parent,
 			_map,
 			_piece_parent))
+			
+	_commandHandler.add(_turnCommand)
 
 
 func get_random_value():
