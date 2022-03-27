@@ -14,7 +14,7 @@ var WINDOW_WIDTH = ProjectSettings.get_setting("display/window/size/width")
 onready var SwipeHandler = get_node("SwipeHandler")
 onready var map = get_node("Board")
 onready var piece_factory = get_node("Pieces")
-onready var mapPopulateStrat = RandomMap.new()
+onready var mapPopulateStrat = MergeTest.new()
 var game: Game
 
 var check_direction
@@ -27,16 +27,21 @@ func _ready() -> void:
 	ProjectSettings.set("2048/layout/window_height", WINDOW_HEIGHT)
 	ProjectSettings.set("2048/layout/map_pixel_size", WINDOW_WIDTH)
 	ProjectSettings.set("2048/layout/map_size", MAP_SIZE)
-	
-	game = Game.new(POSSIBLE_STARING_PIECES, map, MAP_SIZE, command_stack, piece_factory)
+
+	game = Game.new(
+		POSSIBLE_STARING_PIECES, 
+		ADD_PIECE_AFTER_MOVE,
+		map, 
+		MAP_SIZE, 
+		command_stack, 
+		piece_factory)
+
 	SwipeHandler.connect("swiped", self, "on_swipe")
 	map.init_map(MAP_SIZE)
 	start_game()
 	
 func on_swipe(swipe_direction):
 	game.move_phase(swipe_direction)
-	process_stack()
-	game.resolve_phase()
 	process_stack()
 	game.post_turn_phase()
 	process_stack()

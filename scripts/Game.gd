@@ -4,6 +4,7 @@ extends Node
 class_name Game
 
 var _map: PlayBoard
+var _add_piece_after_move: bool
 var _map_size: int
 var _check_direction: Vector2
 var _command_stack: Array
@@ -13,8 +14,16 @@ var _possible_starting_pieces: Array
 
 var processing_stack: Array
 
-func _init(possible_starting_pieces: Array, map: PlayBoard, map_size: int, command_stack: Array, piece_parent: Node):
+func _init(
+	possible_starting_pieces: Array,
+	add_piece_after_move: bool,
+	map: PlayBoard,
+	map_size: int,
+	command_stack: Array,
+	piece_parent: Node):
+
 	_possible_starting_pieces = possible_starting_pieces
+	_add_piece_after_move = add_piece_after_move
 	_map = map
 	_map_size = map_size
 	_piece_parent = piece_parent
@@ -24,24 +33,29 @@ func move_phase(direction):
 	populate_processing_stack(direction)
 
 	for i in processing_stack.size():
-			var board_position = processing_stack[i]["board_position"]
-			var piece = processing_stack[i]["piece"]
-			var next_board_position = board_position
-			
-			_check_direction = get_check_array(direction)
-		
-			while _map.is_free(next_board_position + _check_direction):
-				_piece_has_moved = true
-				next_board_position += _check_direction
-			
-			processing_stack[i]["board_position"] = next_board_position
-			_command_stack.push_back(MoveCommand.new(board_position, next_board_position, piece, _map))
-
-func resolve_phase():
-	for i in processing_stack.size():
 		var board_position = processing_stack[i]["board_position"]
 		var piece = processing_stack[i]["piece"]
-		var next_board_position = board_position + _check_direction
+		var next_board_position = board_position
+		
+		_check_direction = get_check_array(direction)
+		
+		# MOVEMENT
+		
+		while _map.is_free(next_board_position + _check_direction):
+			_piece_has_moved = true
+			next_board_position += _check_direction
+		
+		if board_position != next_board_position:
+			_command_stack.push_back(MoveCommand.new(
+				board_position,
+				next_board_position,
+				piece,
+				_map))
+		
+		# MERGING
+		
+		board_position = next_board_position
+		next_board_position = board_position + _check_direction
 		
 		if _map.is_mergeable(next_board_position, piece.value):
 			_piece_has_moved = true
@@ -63,7 +77,8 @@ func post_turn_phase():
 		if piece != null:
 			piece.has_merged = false
 	
-	if _piece_has_moved:
+	if _piece_has_moved and _add_piece_after_move:
+		_piece_has_moved = false
 		_command_stack.push_back(AddPieceCommand.new(
 			_map.get_random_free_position(),
 			get_random_value(),
@@ -83,6 +98,7 @@ func merge(board_position: Vector2, piece, direction):
 func populate_processing_stack(direction):
 	var check_columns = false
 	var check_in_order = false
+	processing_stack = []
 	
 	match direction:
 		

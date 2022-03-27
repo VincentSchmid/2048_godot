@@ -30,13 +30,12 @@ func _init(from_position: Vector2,
 	_deleteCommand = DeleteCommand.new(_to_position, _stationary_piece, _parent, _map)
 	_moveCommand = MoveCommand.new(_from_position, _to_position, _moving_piece, _map)
 	_setValueCommand = SetValueCommand.new(_moving_piece, _moving_piece.value * 2)
-	
+	_moving_piece.has_merged = true
 
 func execute():
 	_deleteCommand.execute()
 	_moveCommand.execute()
 	_setValueCommand.execute()
-	_moving_piece.has_merged = true
 	
 func undo():
 	_setValueCommand.undo()
