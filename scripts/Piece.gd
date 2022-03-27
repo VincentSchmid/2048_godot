@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
 
+class_name Piece
+
 const SPEED = 6000
 
 var value_label

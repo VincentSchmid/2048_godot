@@ -66,6 +66,9 @@ func is_on_map(position: Vector2) -> bool:
 	
 	return (x >= 0 && x < _map_size) && (y >= 0 && y < _map_size)
 	
+func remove_piece_by_pos(position: Vector2):
+	map[position.y][position.y] = null
+	
 func get_random_position() -> Vector2:
 	return Vector2(rng.randi_range(0, _map_size-1), rng.randi_range(0, _map_size-1))
 

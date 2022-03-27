@@ -1,6 +1,8 @@
 extends Node
 
 
+class_name PieceFactory
+
 onready var piece = preload("res://scenes/piece_generic.tscn")
 var piece_inst
 
