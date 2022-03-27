@@ -7,3 +7,11 @@ enum SwipeDirection {
 	SWIPE_RIGHT,
 	NONE
 }
+
+enum Direction {
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+	NONE
+}

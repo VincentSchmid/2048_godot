@@ -54,6 +54,14 @@ func is_mergeable(position: Vector2, value) -> bool:
 		
 	return not piece.has_merged and piece.value == value
 	
+func is_full():
+	for y in map:
+		for piece in map[y]:
+			if piece == null:
+				return false
+	
+	return true
+	
 func remove_piece(piece):
 	garbage_pieces.append(piece)
 
