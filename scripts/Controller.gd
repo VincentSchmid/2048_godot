@@ -6,16 +6,17 @@ const PIECE_SIZE = 200
 const MARGIN = 50.0
 const STARTING_PIECE_COUNT = 2
 const POSSIBLE_STARING_PIECES = [2, 4]
-const ADD_PIECE_AFTER_MOVE = true
+const ADD_PIECE_AFTER_MOVE = false
 const UNDO_COUNT = 5
 
 var WINDOW_HEIGHT = ProjectSettings.get_setting("display/window/size/height")
 var WINDOW_WIDTH = ProjectSettings.get_setting("display/window/size/width")
 
+onready var undo_button = get_node("Undo")
 onready var SwipeHandler = get_node("SwipeHandler")
 onready var map = get_node("Board")
 onready var piece_factory = get_node("Pieces")
-onready var mapPopulateStrat = RandomMap.new()
+onready var mapPopulateStrat = MergeTest.new()
 var commandHandler: CommandHandler
 var game: Game
 
@@ -35,6 +36,7 @@ func _ready() -> void:
 		piece_factory)
 
 	SwipeHandler.connect("swiped", self, "on_swipe")
+	undo_button.connect("pressed", self, "on_undo")
 	map.init_map(MAP_SIZE)
 	start_game()
 	

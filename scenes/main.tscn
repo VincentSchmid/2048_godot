@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
+[ext_resource path="res://font/firaCode_regular.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scripts/SwipeHandler.gd" type="Script" id=7]
 [ext_resource path="res://scripts/Controller.gd" type="Script" id=9]
 [ext_resource path="res://scripts/PlayBoard.gd" type="Script" id=10]
@@ -27,3 +28,11 @@ script = ExtResource( 10 )
 
 [node name="Pieces" type="Node" parent="Controller"]
 script = ExtResource( 11 )
+
+[node name="Undo" type="Button" parent="Controller"]
+margin_left = 742.0
+margin_top = 60.0
+margin_right = 921.0
+margin_bottom = 165.0
+custom_fonts/font = ExtResource( 1 )
+text = "UNDO"

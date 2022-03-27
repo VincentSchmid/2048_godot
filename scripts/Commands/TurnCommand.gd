@@ -17,12 +17,13 @@ func _init():
 func execute():
 	var command
 	var prio_stack_size = _priority_command_stack.size()
+	var past_prio_commmands = []
 	_completed_count = 0
-
+	
 	while not _priority_command_stack.empty():
 		command = _priority_command_stack.pop_front()
 		command.execute()
-		_add_past_command(command)
+		past_prio_commmands.push_back(command)
 		wait_for_commands(command, prio_stack_size)
 		
 	yield(self, "commands_completed")
@@ -31,10 +32,13 @@ func execute():
 		command = _command_stack.pop_front()
 		command.execute()
 		_add_past_command(command)
+		
+	for past_command in past_prio_commmands:
+		_add_past_command(past_command)
 	
 func undo():
 	while not _past_command_stack.empty():
-		var command = _command_stack.pop_front()
+		var command = _past_command_stack.pop_front()
 		command.undo()
 
 func add_priority(command: Command):

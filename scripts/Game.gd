@@ -91,14 +91,10 @@ func post_turn_phase():
 			
 	_commandHandler.add(_turnCommand)
 
-
 func get_random_value():
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	return _possible_starting_pieces[rng.randi_range(0, _possible_starting_pieces.size()-1)]
-
-func merge(board_position: Vector2, piece, direction):
-	pass
 
 func populate_processing_stack(direction):
 	var check_columns = false
