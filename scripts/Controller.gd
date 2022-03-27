@@ -6,7 +6,7 @@ const PIECE_SIZE = 200
 const MARGIN = 50.0
 const STARTING_PIECE_COUNT = 2
 const POSSIBLE_STARING_PIECES = [2, 4]
-const ADD_PIECE_AFTER_MOVE = false
+const ADD_PIECE_AFTER_MOVE = true
 const UNDO_COUNT = 5
 
 var WINDOW_HEIGHT = ProjectSettings.get_setting("display/window/size/height")
@@ -15,7 +15,7 @@ var WINDOW_WIDTH = ProjectSettings.get_setting("display/window/size/width")
 onready var SwipeHandler = get_node("SwipeHandler")
 onready var map = get_node("Board")
 onready var piece_factory = get_node("Pieces")
-onready var mapPopulateStrat = MergeTest.new()
+onready var mapPopulateStrat = RandomMap.new()
 var commandHandler: CommandHandler
 var game: Game
 

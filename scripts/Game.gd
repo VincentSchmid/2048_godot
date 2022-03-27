@@ -48,7 +48,7 @@ func move_phase(direction):
 			next_board_position += _check_direction
 		
 		if board_position != next_board_position:
-			_turnCommand.add(MoveCommand.new(
+			_turnCommand.add_priority(MoveCommand.new(
 				board_position,
 				next_board_position,
 				piece,
@@ -67,7 +67,8 @@ func move_phase(direction):
 				piece, 
 				_map.get_piece(next_board_position),
 				_piece_parent,
-				_map))
+				_map,
+				_turnCommand))
 
 func post_turn_phase():
 	if _map.is_full():

@@ -3,7 +3,7 @@ extends KinematicBody2D
 
 class_name Piece
 
-const SPEED = 600
+const SPEED = 6000
 
 var value_label
 var next_position
