@@ -33,4 +33,3 @@ func set_value(new_value):
 
 func move():
 	is_moving = true
-	has_merged = false

@@ -18,10 +18,12 @@ func _init(from_board_postion: Vector2, to_board_position: Vector2, piece: Piece
 
 func execute():
 	_piece.next_position = get_global_position(_to_board_position)
+	_piece.is_moving = true
 	
 func undo():
 	_map.move_piece(_to_board_position, _from_board_postion)
 	_piece.next_position = get_global_position(_from_board_postion)
+	_piece.is_moving = true
 
 static func get_global_position(board_position) -> Vector2:
 	
