@@ -38,6 +38,9 @@ func move_piece(from_position: Vector2, to_position: Vector2 ):
 		map[from_position.y][from_position.x] = null
 
 func set_piece(position: Vector2, piece):
+	if map[position.y][position.x] != null:
+		print("ouchie", position)
+		
 	map[position.y][position.x] = piece
 
 func get_piece(position: Vector2):

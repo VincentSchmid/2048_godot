@@ -20,29 +20,21 @@ func _init(undo_count: int, possible_numbers: Array, map: PlayBoard):
 	_map = map
 	rng_stack = []
 	
-func _get_new_stack():
-	var stack = []
-	for i in _undo_count:
-		stack.push_front(_get_random_entry())
-		
-	return stack
-	
 func get_next_value() -> int:
-	pointer -= 1
 	return _get_next()["value"]
 	
 func get_next_position() -> Vector2:
+	pointer -= 1
 	return _get_next()["position"]
 	
 func _get_next():
-	if rng_stack.empty():
-		rng_stack = _get_new_stack()
-	
 	if pointer < 0:
 		pointer = 0
-		rng_stack.pop_back()
 		rng_stack.push_front(_get_random_entry())
-		
+	
+	if rng_stack.size() > _undo_count:
+		rng_stack.pop_back()
+	
 	return rng_stack[pointer]
 	
 func revert():
