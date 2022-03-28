@@ -34,10 +34,7 @@ func get_next_position() -> Vector2:
 	return pos
 	
 func _reset_pos():
-	var val = rng_stack[pointer]["value"]
 	rng_stack[pointer] = _get_random_entry()
-	rng_stack[pointer]["value"] = val
-	
 	return rng_stack[pointer]["position"]
 	
 func _get_next():
