@@ -8,6 +8,11 @@
 
 [node name="main" type="Node2D"]
 
+[node name="Background" type="ColorRect" parent="."]
+margin_right = 1170.0
+margin_bottom = 2532.0
+color = Color( 0.105882, 0.113725, 0.117647, 1 )
+
 [node name="Controller" type="Node" parent="."]
 script = ExtResource( 9 )
 
@@ -33,8 +38,3 @@ text = "UNDO"
 
 [node name="SwipeHandler" type="Node" parent="Controller"]
 script = ExtResource( 7 )
-
-[node name="Background" type="ColorRect" parent="."]
-margin_right = 1170.0
-margin_bottom = 2532.0
-color = Color( 0.105882, 0.113725, 0.117647, 1 )
