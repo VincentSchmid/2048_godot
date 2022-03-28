@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scripts/Piece.gd" type="Script" id=1]
 [ext_resource path="res://font/firaCode_bold.tres" type="DynamicFont" id=2]
-[ext_resource path="res://scenes/Piece_value.gd" type="Script" id=3]
+[ext_resource path="res://scripts/Piece_value.gd" type="Script" id=3]
 
 [node name="Piece" type="KinematicBody2D"]
 script = ExtResource( 1 )

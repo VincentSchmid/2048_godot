@@ -13,6 +13,5 @@ var text_sizeByCount = {
 func set_value(value: int):
 	var text_val = String(value)
 	text = text_val
-	# get_font(font_path).size = 
 	var my_font = get("custom_fonts/font")
-	my_font.size = text_sizeByCount[text_val.length()]
+	my_font.size = text_sizeByCount[3] #[text_val.length()]
