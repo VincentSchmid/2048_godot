@@ -1,11 +1,8 @@
 extends Node
 
 
-# Touch Variables
-var first_touch = Vector2(0, 0);
-
 const ANGLE_TOLERANCE_PERCENTAGE = 20;
-const MIN_DRAG_DISTANCE = 100;
+const MIN_DRAG_DISTANCE = 300;
 
 const DIRECTION_LEFT = 90;
 const DIRECTION_RIGHT = -90;
@@ -15,17 +12,34 @@ const DIRECTION_DOWN = 180;
 signal swiped(swipe_direction)
 
 var SwipeDirection = Enums.SwipeDirection
+var listen_to_swipe = false
+var start_touch_pos = Vector2(0, 0);
+var current_touch_pos: Vector2
+var move_registered = false
 
 func _input(event):
-	if event is InputEventScreenTouch:
-		if event.pressed:
-			first_touch = event.position;
-		else:
-			var final_touch = event.position;
-			var swipe_direction = _get_swipe_direction(first_touch, final_touch)
+	if event is InputEventScreenTouch and event.is_pressed():
+		listen_to_swipe = true
+		start_touch_pos = event.position
+		current_touch_pos = event.position
+		
+	elif event is InputEventScreenTouch and not event.is_pressed():
+		listen_to_swipe = false
 
-			if swipe_direction != SwipeDirection.NONE:
+	elif event is InputEventScreenDrag:
+		current_touch_pos = event.position
+		
+
+func _process(delta):
+	print(listen_to_swipe)
+	if listen_to_swipe and start_touch_pos.distance_to(current_touch_pos) >= MIN_DRAG_DISTANCE:
+		print("yay")
+		var swipe_direction = _get_swipe_direction(start_touch_pos, current_touch_pos)
+		listen_to_swipe = false
+		
+		if swipe_direction != SwipeDirection.NONE:
 				emit_signal("swiped", swipe_direction);
+
 
 func _get_swipe_direction(start_touch, end_touch) -> int:
 	var difference = start_touch - end_touch;
