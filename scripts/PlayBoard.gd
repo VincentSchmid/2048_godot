@@ -54,6 +54,14 @@ func is_mergeable(position: Vector2, value) -> bool:
 		
 	return not piece.has_merged and piece.value == value
 	
+func is_full():
+	for col in map:
+		for piece in col:
+			if piece == null:
+				return false
+	
+	return true
+	
 func remove_piece(piece):
 	garbage_pieces.append(piece)
 
@@ -66,6 +74,9 @@ func is_on_map(position: Vector2) -> bool:
 	
 	return (x >= 0 && x < _map_size) && (y >= 0 && y < _map_size)
 	
+func remove_piece_by_pos(position: Vector2):
+	map[position.y][position.x] = null
+	
 func get_random_position() -> Vector2:
 	return Vector2(rng.randi_range(0, _map_size-1), rng.randi_range(0, _map_size-1))
 
@@ -75,23 +86,8 @@ func get_random_free_position() -> Vector2:
 		random_position = get_random_position()
 	
 	return random_position
-
-func draw_board():
-	for col in map:
-		for piece in col:
-			if piece != null:
-					piece.move()
-					wait_for_move_complete(piece)
 	
 func wait_for_move_complete(piece):
 	_moving.append(1)
 	yield(piece, "arrived")
 	_moving.pop_front()
-	
-	if _moving == []:
-		clear_garbage()
-
-func clear_garbage():
-	for piece in garbage_pieces:
-		piece.queue_free()
-	garbage_pieces = []

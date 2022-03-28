@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
 
+class_name Piece
+
 const SPEED = 6000
 
 var value_label
@@ -31,4 +33,3 @@ func set_value(new_value):
 
 func move():
 	is_moving = true
-	has_merged = false
