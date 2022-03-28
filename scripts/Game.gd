@@ -88,8 +88,9 @@ func post_turn_phase():
 			_piece_parent,
 			_map,
 			_piece_parent))
-			
-	_commandHandler.add(_turnCommand)
+	
+	if _turnCommand.has_commands():
+		_commandHandler.add(_turnCommand)
 
 func get_random_value():
 	var rng = RandomNumberGenerator.new()
