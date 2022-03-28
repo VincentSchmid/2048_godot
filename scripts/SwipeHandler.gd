@@ -8,6 +8,7 @@ const DIRECTION_LEFT = 90;
 const DIRECTION_RIGHT = -90;
 const DIRECTION_UP = 0;
 const DIRECTION_DOWN = 180;
+const ACTIVE_SCREEN_HEIGHT = 2400
 
 signal swiped(swipe_direction)
 
@@ -18,7 +19,7 @@ var current_touch_pos: Vector2
 var move_registered = false
 
 func _input(event):
-	if event is InputEventScreenTouch and event.is_pressed():
+	if event is InputEventScreenTouch and event.is_pressed() and event.position.y < ACTIVE_SCREEN_HEIGHT:
 		listen_to_swipe = true
 		start_touch_pos = event.position
 		current_touch_pos = event.position

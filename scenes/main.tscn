@@ -11,12 +11,6 @@
 [node name="Controller" type="Node" parent="."]
 script = ExtResource( 9 )
 
-[node name="SwipeHandler" type="ColorRect" parent="Controller"]
-margin_right = 1170.0
-margin_bottom = 2532.0
-color = Color( 0.105882, 0.113725, 0.117647, 1 )
-script = ExtResource( 7 )
-
 [node name="Board" type="ColorRect" parent="Controller"]
 visible = false
 margin_top = 585.0
@@ -36,3 +30,11 @@ margin_right = 1070.0
 margin_bottom = 200.0
 custom_fonts/font = ExtResource( 1 )
 text = "UNDO"
+
+[node name="SwipeHandler" type="Node" parent="Controller"]
+script = ExtResource( 7 )
+
+[node name="Background" type="ColorRect" parent="."]
+margin_right = 1170.0
+margin_bottom = 2532.0
+color = Color( 0.105882, 0.113725, 0.117647, 1 )
