@@ -2,7 +2,7 @@ extends Node
 
 
 const ANGLE_TOLERANCE_PERCENTAGE = 20;
-const MIN_DRAG_DISTANCE = 300;
+const MIN_DRAG_DISTANCE = 250;
 
 const DIRECTION_LEFT = 90;
 const DIRECTION_RIGHT = -90;
@@ -31,9 +31,7 @@ func _input(event):
 		
 
 func _process(delta):
-	print(listen_to_swipe)
 	if listen_to_swipe and start_touch_pos.distance_to(current_touch_pos) >= MIN_DRAG_DISTANCE:
-		print("yay")
 		var swipe_direction = _get_swipe_direction(start_touch_pos, current_touch_pos)
 		listen_to_swipe = false
 		
