@@ -25,7 +25,20 @@ func get_next_value() -> int:
 	
 func get_next_position() -> Vector2:
 	pointer -= 1
-	return _get_next()["position"]
+	
+	var pos = _get_next()["position"]
+	
+	if not _map.is_free(pos):
+		print("collsion")
+		pos = _reset_pos()
+	return pos
+	
+func _reset_pos():
+	var val = rng_stack[pointer]["value"]
+	rng_stack[pointer] = _get_random_entry()
+	rng_stack[pointer]["value"] = val
+	
+	return rng_stack[pointer]["position"]
 	
 func _get_next():
 	if pointer < 0:

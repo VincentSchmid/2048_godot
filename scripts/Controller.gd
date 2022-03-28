@@ -16,7 +16,7 @@ onready var undo_button = get_node("Undo")
 onready var SwipeHandler = get_node("SwipeHandler")
 onready var map = get_node("Board")
 onready var piece_factory = get_node("Pieces")
-onready var mapPopulateStrat = MergeTest.new()
+onready var mapPopulateStrat = RandomMap.new()
 onready var rng_gen = RngGen.new(UNDO_COUNT, POSSIBLE_STARING_PIECES, map)
 var commandHandler: CommandHandler
 var game: Game
