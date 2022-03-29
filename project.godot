@@ -1,0 +1,143 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Command",
+"class": "AddPieceCommand",
+"language": "GDScript",
+"path": "res://scripts/Commands/AddPieceCommand.gd"
+}, {
+"base": "Node",
+"class": "Command",
+"language": "GDScript",
+"path": "res://scripts/Commands/Command.gd"
+}, {
+"base": "Node",
+"class": "CommandHandler",
+"language": "GDScript",
+"path": "res://scripts/Commands/CommandHandler.gd"
+}, {
+"base": "Command",
+"class": "DeleteCommand",
+"language": "GDScript",
+"path": "res://scripts/Commands/DeleteCommand.gd"
+}, {
+"base": "Reference",
+"class": "Enums",
+"language": "GDScript",
+"path": "res://scripts/Enums.gd"
+}, {
+"base": "Node",
+"class": "Game",
+"language": "GDScript",
+"path": "res://scripts/Game.gd"
+}, {
+"base": "Node",
+"class": "MapPopulateStrategy",
+"language": "GDScript",
+"path": "res://scripts/MapPopulateStrats/MapPopulateStrategy.gd"
+}, {
+"base": "Command",
+"class": "MergeCommand",
+"language": "GDScript",
+"path": "res://scripts/Commands/MergeCommand.gd"
+}, {
+"base": "MapPopulateStrategy",
+"class": "MergeTest",
+"language": "GDScript",
+"path": "res://scripts/MapPopulateStrats/MergeTest.gd"
+}, {
+"base": "Command",
+"class": "MoveCommand",
+"language": "GDScript",
+"path": "res://scripts/Commands/MoveCommand.gd"
+}, {
+"base": "MapPopulateStrategy",
+"class": "MoveTest",
+"language": "GDScript",
+"path": "res://scripts/MapPopulateStrats/MoveTest.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Piece",
+"language": "GDScript",
+"path": "res://scripts/Piece.gd"
+}, {
+"base": "Node",
+"class": "PieceFactory",
+"language": "GDScript",
+"path": "res://scripts/PieceFactory.gd"
+}, {
+"base": "Node",
+"class": "PlayBoard",
+"language": "GDScript",
+"path": "res://scripts/PlayBoard.gd"
+}, {
+"base": "MapPopulateStrategy",
+"class": "RandomMap",
+"language": "GDScript",
+"path": "res://scripts/MapPopulateStrats/RandomMap.gd"
+}, {
+"base": "Command",
+"class": "SetValueCommand",
+"language": "GDScript",
+"path": "res://scripts/Commands/SetValueCommand.gd"
+}, {
+"base": "Command",
+"class": "TurnCommand",
+"language": "GDScript",
+"path": "res://scripts/Commands/TurnCommand.gd"
+} ]
+_global_script_class_icons={
+"AddPieceCommand": "",
+"Command": "",
+"CommandHandler": "",
+"DeleteCommand": "",
+"Enums": "",
+"Game": "",
+"MapPopulateStrategy": "",
+"MergeCommand": "",
+"MergeTest": "",
+"MoveCommand": "",
+"MoveTest": "",
+"Piece": "",
+"PieceFactory": "",
+"PlayBoard": "",
+"RandomMap": "",
+"SetValueCommand": "",
+"TurnCommand": ""
+}
+
+[application]
+
+config/name="2048_new"
+run/main_scene="res://scenes/main.tscn"
+config/icon="res://icon.png"
+
+[display]
+
+window/size/width=1170
+window/size/height=2532
+window/size/test_width=288
+window/size/test_height=512
+window/handheld/orientation="portrait"
+window/stretch/mode="2d"
+window/handheld/emulate_touchscreen=true
+
+[input]
+
+ui_touch={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
