@@ -48,7 +48,7 @@ func move_phase(direction):
 			next_board_position += _check_direction
 		
 		if board_position != next_board_position:
-			_turnCommand.add_priority(MoveCommand.new(
+			_turnCommand.add(MoveCommand.new(
 				board_position,
 				next_board_position,
 				piece,
@@ -90,7 +90,7 @@ func post_turn_phase():
 			Vector2(),
 			0))
 	
-	if _turnCommand.has_commands():
+	if _turnCommand.has_commands:
 		_commandHandler.add(_turnCommand)
 
 func populate_processing_stack(direction):

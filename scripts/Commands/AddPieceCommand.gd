@@ -3,6 +3,7 @@ extends Command
 
 class_name AddPieceCommand
 
+var command_type = Command.CommandTypes.ADD
 var _position: Vector2
 var _rng_gen: RngGen
 var _value: int

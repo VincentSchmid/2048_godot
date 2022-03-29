@@ -3,61 +3,64 @@ extends Command
 
 class_name TurnCommand
 
+var has_commands = false
 var _priority_command_stack: Array
-var _command_stack: Array
-var _past_command_stack: Array
-var _past_priority_command_stack: Array
+var _command_stacks: Array
+var _past_command_stacks: Array
 var _completed_count: int
 
 signal commands_completed()
 
 func _init():
-	_command_stack = []
-	_past_command_stack = []
+	for commandType in Command.CommandTypes:
+		_command_stacks.append([])
+		_past_command_stacks.append([])
 
 func execute():
 	var command
-	var prio_stack_size = _priority_command_stack.size()
-	var past_prio_commmands = []
+	var move_commands = _command_stacks[Command.CommandTypes.MOVE]
+	var move_commands_stack_size = move_commands.size()
+	has_commands = false
 	_completed_count = 0
 	
-	while not _priority_command_stack.empty():
-		command = _priority_command_stack.pop_front()
+	while not move_commands.empty():
+		command = move_commands.pop_front()
 		command.execute()
-		_wait_for_commands(command, prio_stack_size)
-		_add_past_priority_command(command)
+		_wait_for_commands(command, move_commands_stack_size)
+		_add_past_command(command)
 		
 	yield(self, "commands_completed")
 	
-	while not _command_stack.empty():
-		command = _command_stack.pop_front()
-		command.execute()
-		_add_past_command(command)
+	for command_stack in _command_stacks:
+		while not command_stack.empty():
+			command = command_stack.pop_front()
+			command.execute()
+			_add_past_command(command)
 	
 func undo():
 	var command
-	while not _past_priority_command_stack.empty():
-		command = _past_priority_command_stack.pop_front()
-		command.undo()
-	
-	while not _past_command_stack.empty():
-		command = _past_command_stack.pop_front()
+	var past_add_commands = _past_command_stacks[Command.CommandTypes.ADD]
+	var past_move_commands = _past_command_stacks[Command.CommandTypes.MOVE]
+
+	while not past_add_commands.empty():
+		command = past_add_commands.pop_front()
 		command.undo()
 
-func add_priority(command: Command):
-	_priority_command_stack.push_back(command)
+	while not past_move_commands.empty():
+		command = past_move_commands.pop_front()
+		command.undo()
+	
+	for i in _past_command_stacks.size():
+		while not _past_command_stacks[i].empty():
+			command = _past_command_stacks[i].pop_front()
+			command.undo()
 
 func add(command: Command):
-	_command_stack.push_back(command)
-	
-func has_commands():
-	return not _priority_command_stack.empty() or not _command_stack.empty()
-
-func _add_past_priority_command(command: Command):
-	_past_priority_command_stack.push_front(command)
+	has_commands = true
+	_command_stacks[command.command_type].push_back(command)
 
 func _add_past_command(command: Command):
-	_past_command_stack.push_front(command)
+	_past_command_stacks[command.command_type].push_front(command)
 
 func _wait_for_commands(command: Command, count: int):
 	yield(command, "completed")

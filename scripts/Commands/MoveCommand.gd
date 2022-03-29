@@ -3,6 +3,7 @@ extends Command
 
 class_name MoveCommand
 
+var command_type = Command.CommandTypes.MOVE
 var _from_board_postion: Vector2
 var _to_board_position: Vector2
 var _piece: Piece

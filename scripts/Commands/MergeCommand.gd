@@ -3,6 +3,7 @@ extends Command
 
 class_name MergeCommand
 
+var command_type = Command.CommandTypes.MERGE
 var _from_position: Vector2
 var _to_position: Vector2
 var _moving_piece: Piece
@@ -29,7 +30,7 @@ func _init(from_position: Vector2,
 	_map = map
 	
 	_deleteCommand = DeleteCommand.new(_to_position, _stationary_piece, _parent, _map)
-	turnCommand.add_priority(MoveCommand.new(_from_position, _to_position, _moving_piece, _map))
+	turnCommand.add(MoveCommand.new(_from_position, _to_position, _moving_piece, _map))
 	_setValueCommand = SetValueCommand.new(_moving_piece, _moving_piece.value * 2)
 	_moving_piece.has_merged = true
 
