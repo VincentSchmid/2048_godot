@@ -3,6 +3,7 @@ extends Command
 
 class_name DeleteCommand
 
+var command_type = Command.CommandTypes.DELETE
 var _position: Vector2
 var _piece: Node
 var _parent: Node

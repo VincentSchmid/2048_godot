@@ -17,8 +17,10 @@ onready var SwipeHandler = get_node("SwipeHandler")
 onready var map = get_node("Board")
 onready var piece_factory = get_node("Pieces")
 onready var mapPopulateStrat = RandomMap.new()
+onready var rng_gen = RngGen.new(UNDO_COUNT, POSSIBLE_STARING_PIECES, map)
 var commandHandler: CommandHandler
 var game: Game
+
 
 func _ready() -> void:
 	ProjectSettings.set("2048/layout/margin", MARGIN)
@@ -28,11 +30,11 @@ func _ready() -> void:
 	
 	commandHandler = CommandHandler.new(UNDO_COUNT)
 	game = Game.new(
-		POSSIBLE_STARING_PIECES, 
 		ADD_PIECE_AFTER_MOVE,
+		MAP_SIZE,
 		map, 
-		MAP_SIZE, 
-		commandHandler, 
+		rng_gen,
+		commandHandler,
 		piece_factory)
 
 	SwipeHandler.connect("swiped", self, "on_swipe")
@@ -64,4 +66,4 @@ func place_pieces(value_map: Array):
 				place_piece(Vector2(x, y), value)
 
 func place_piece(board_position: Vector2, value: int):
-	AddPieceCommand.new(board_position, value, piece_factory, map, piece_factory).execute()
+	AddPieceCommand.new(null, piece_factory, map, piece_factory, board_position, value).execute()

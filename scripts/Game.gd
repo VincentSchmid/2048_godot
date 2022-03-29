@@ -6,27 +6,27 @@ class_name Game
 var _map: PlayBoard
 var _add_piece_after_move: bool
 var _map_size: int
+var _rng_gen: RngGen
 var _check_direction: Vector2
 var _commandHandler: CommandHandler
 var _piece_parent: Node
 var _piece_has_moved = false
-var _possible_starting_pieces: Array
 var _turnCommand: TurnCommand
 
 var processing_stack: Array
 
 func _init(
-	possible_starting_pieces: Array,
 	add_piece_after_move: bool,
-	map: PlayBoard,
 	map_size: int,
+	map: PlayBoard,
+	rng_gen: RngGen,
 	commandHandler: CommandHandler,
 	piece_parent: Node):
 
-	_possible_starting_pieces = possible_starting_pieces
 	_add_piece_after_move = add_piece_after_move
 	_map = map
 	_map_size = map_size
+	_rng_gen = rng_gen
 	_piece_parent = piece_parent
 	_commandHandler = commandHandler
 
@@ -48,7 +48,7 @@ func move_phase(direction):
 			next_board_position += _check_direction
 		
 		if board_position != next_board_position:
-			_turnCommand.add_priority(MoveCommand.new(
+			_turnCommand.add(MoveCommand.new(
 				board_position,
 				next_board_position,
 				piece,
@@ -83,19 +83,15 @@ func post_turn_phase():
 	if _piece_has_moved and _add_piece_after_move:
 		_piece_has_moved = false
 		_turnCommand.add(AddPieceCommand.new(
-			_map.get_random_free_position(),
-			get_random_value(),
+			_rng_gen,
 			_piece_parent,
 			_map,
-			_piece_parent))
+			_piece_parent,
+			Vector2(),
+			0))
 	
-	if _turnCommand.has_commands():
+	if _turnCommand.has_commands:
 		_commandHandler.add(_turnCommand)
-
-func get_random_value():
-	var rng = RandomNumberGenerator.new()
-	rng.randomize()
-	return _possible_starting_pieces[rng.randi_range(0, _possible_starting_pieces.size()-1)]
 
 func populate_processing_stack(direction):
 	var check_columns = false
