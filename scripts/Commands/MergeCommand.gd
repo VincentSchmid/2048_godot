@@ -39,6 +39,9 @@ func execute():
 	_setValueCommand.execute()
 	
 func undo():
+	if not _map.is_free(_to_position):
+		_deleteCommand._position = _from_position
+
 	_setValueCommand.undo()
 	_deleteCommand.undo()
 	_moving_piece.has_merged = false
