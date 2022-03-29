@@ -71,29 +71,40 @@ func move_phase(direction):
 				_turnCommand))
 
 func post_turn_phase():
-	if _map.is_full():
-		# check_possible_actions
-		pass
+	if _map.is_full() and not neighbours_with_equal_value_exist():
+        #game over
+    else:
+        for i in processing_stack.size():
+            var piece = processing_stack[i]["piece"]
+            if piece != null:
+                piece.has_merged = false
 
-	for i in processing_stack.size():
-		var piece = processing_stack[i]["piece"]
-		if piece != null:
-			piece.has_merged = false
-	
-	if _piece_has_moved and _add_piece_after_move:
-		_piece_has_moved = false
-		_turnCommand.add(AddPieceCommand.new(
-			_rng_gen,
-			_piece_parent,
-			_map,
-			_piece_parent,
-			Vector2(),
-			0))
-	
-	if _turnCommand.has_commands:
-		_commandHandler.add(_turnCommand)
+        if _piece_has_moved and _add_piece_after_move:
+            _piece_has_moved = false
+            _turnCommand.add(AddPieceCommand.new(
+                _rng_gen,
+                _piece_parent,
+                _map,
+                _piece_parent,
+                Vector2(),
+                0))
 
-func populate_processing_stack(direction):
+        if _turnCommand.has_commands:
+            _commandHandler.add(_turnCommand)
+
+func neighbours_with_equal_value_exist():
+    pieces = populate_processing_stack(Enums.Direction.UP)
+    for piece in pieces:
+        for i in 4:
+            if _map.is_on_map(piece.position + get_check_array(i)):
+                var neighbouring_piece = _map.get_piece(piece.position + get_check_array(i))
+                if neighbouring_piece != null and piece.value == neighbouring_piece.value:
+                    return true
+
+    return false
+
+
+func populate_processing_stack(direction) -> Array:
 	var check_columns = false
 	var check_in_order = false
 	processing_stack = []
@@ -143,16 +154,16 @@ func populate_processing_stack(direction):
 						"piece": piece})
 
 func get_check_array(direction):
-	if direction == Enums.SwipeDirection.SWIPE_UP:
+	if direction == Enums.Direction.UP:
 		_check_direction = Vector2(0, -1)
 	
-	elif direction == Enums.SwipeDirection.SWIPE_DOWN:
+	elif direction == Enums.Direction.DOWN:
 		_check_direction = Vector2(0, 1)	
 
-	elif direction == Enums.SwipeDirection.SWIPE_LEFT:
+	elif direction == Enums.Direction.LEFT:
 		_check_direction = Vector2(-1, 0)
 
-	elif direction == Enums.SwipeDirection.SWIPE_RIGHT:
+	elif direction == Enums.Direction.RIGHT:
 		_check_direction = Vector2(1, 0)
 	
 	return _check_direction
