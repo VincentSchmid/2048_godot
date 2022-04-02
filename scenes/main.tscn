@@ -28,6 +28,14 @@ script = ExtResource( 10 )
 [node name="Pieces" type="Node" parent="Controller"]
 script = ExtResource( 11 )
 
+[node name="NewGame" type="Button" parent="Controller"]
+margin_left = 893.0
+margin_top = 231.0
+margin_right = 1097.0
+margin_bottom = 336.0
+custom_fonts/font = ExtResource( 1 )
+text = "NEW GAME"
+
 [node name="Undo" type="Button" parent="Controller"]
 margin_left = 891.0
 margin_top = 95.0

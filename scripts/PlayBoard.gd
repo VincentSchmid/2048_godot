@@ -14,7 +14,10 @@ var _moving = []
 func init_map(map_size):
 	_map_size = map_size
 	rng.randomize()
-	
+
+	if not map.empty():
+		clear_map()
+
 	map = [];
 	for y in _map_size:
 		map.append([]);
@@ -70,8 +73,16 @@ func is_full():
 	
 	return true
 	
-func remove_piece(piece):
-	garbage_pieces.append(piece)
+func _delete_piece(piece: Node):
+	piece.queue_free()
+	
+func clear_map():
+	for x in _map_size:
+		for y in _map_size:
+			var pos = Vector2(x, y)
+			if not is_free(pos):
+				_delete_piece(get_piece(pos))
+				
 
 func is_free(position: Vector2) -> bool:
 	return is_on_map(position) && get_piece(position) == null

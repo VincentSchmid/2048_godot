@@ -13,6 +13,7 @@ var WINDOW_HEIGHT = ProjectSettings.get_setting("display/window/size/height")
 var WINDOW_WIDTH = ProjectSettings.get_setting("display/window/size/width")
 
 onready var undo_button = get_node("Undo")
+onready var new_game_button = get_node("NewGame")
 onready var SwipeHandler = get_node("SwipeHandler")
 onready var map = get_node("Board")
 onready var piece_factory = get_node("Pieces")
@@ -42,8 +43,9 @@ func _ready() -> void:
 
 	SwipeHandler.connect("swiped", self, "on_swipe")
 	undo_button.connect("pressed", self, "on_undo")
+	new_game_button.connect("pressed", self, "on_new_game")
 	self.connect("game_over", self, "on_game_over")
-	map.init_map(MAP_SIZE)
+	
 	start_game()
 	
 func _process(delta):
@@ -59,17 +61,21 @@ func on_swipe(swipe_direction):
 func on_undo():
 	commandHandler.undo()
 	
+func on_new_game():
+	start_game()
+	
 func on_game_over():
 	playing = false
 	print("game over")
 
 func start_game():
-	playing = true
+	map.init_map(MAP_SIZE)
 	var value_map = mapPopulateStrat.populate_map(MAP_SIZE,
 		STARTING_PIECE_COUNT,
 		POSSIBLE_STARING_PIECES)
 	
 	place_pieces(value_map)
+	playing = true
 
 func place_pieces(value_map: Array):
 	for y in value_map.size():
