@@ -30,9 +30,9 @@ script = ExtResource( 11 )
 
 [node name="NewGame" type="Button" parent="Controller"]
 margin_left = 893.0
-margin_top = 231.0
+margin_top = 310.0
 margin_right = 1097.0
-margin_bottom = 336.0
+margin_bottom = 415.0
 custom_fonts/font = ExtResource( 1 )
 text = "NEW GAME"
 
@@ -48,11 +48,10 @@ text = "UNDO"
 script = ExtResource( 7 )
 
 [node name="GameOver" type="ColorRect" parent="Controller"]
-visible = false
 margin_left = 6.0
-margin_top = 860.0
+margin_top = 1870.0
 margin_right = 1164.0
-margin_bottom = 1355.0
+margin_bottom = 2365.0
 
 [node name="Label" type="Label" parent="Controller/GameOver"]
 margin_left = 149.0

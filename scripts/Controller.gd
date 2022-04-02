@@ -61,6 +61,8 @@ func on_swipe(swipe_direction):
 		commandHandler.process_stack()
 	
 func on_undo():
+	playing = true
+	game_over_overlay.visible = false
 	commandHandler.undo()
 	
 func on_new_game():
