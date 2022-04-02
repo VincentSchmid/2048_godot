@@ -24,7 +24,7 @@ func _init(rng_gen: RngGen, parent: Node, map: PlayBoard, factory: PieceFactory,
 		_position = rng_gen.get_next_position()
 		_value = rng_gen.get_next_value()
 	
-	_piece = _factory.create_piece(.get_global_position(_position), _value)
+	_piece = _factory.create_piece(_position, _value)
 	_map.set_piece(_position, _piece)
 
 func execute():

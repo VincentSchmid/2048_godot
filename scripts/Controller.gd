@@ -13,6 +13,8 @@ var WINDOW_HEIGHT = ProjectSettings.get_setting("display/window/size/height")
 var WINDOW_WIDTH = ProjectSettings.get_setting("display/window/size/width")
 
 onready var undo_button = get_node("Undo")
+onready var game_over_overlay = get_node("GameOver")
+onready var new_game_button = get_node("NewGame")
 onready var SwipeHandler = get_node("SwipeHandler")
 onready var map = get_node("Board")
 onready var piece_factory = get_node("Pieces")
@@ -21,6 +23,9 @@ onready var rng_gen = RngGen.new(UNDO_COUNT, POSSIBLE_STARING_PIECES, map)
 var commandHandler: CommandHandler
 var game: Game
 
+var playing: bool
+
+signal game_over()
 
 func _ready() -> void:
 	ProjectSettings.set("2048/layout/margin", MARGIN)
@@ -39,24 +44,41 @@ func _ready() -> void:
 
 	SwipeHandler.connect("swiped", self, "on_swipe")
 	undo_button.connect("pressed", self, "on_undo")
-	map.init_map(MAP_SIZE)
+	new_game_button.connect("pressed", self, "on_new_game")
+	self.connect("game_over", self, "on_game_over")
+	
 	start_game()
 	
+func _process(delta):
+	if playing and game.is_game_over():
+		emit_signal("game_over")
+
 func on_swipe(swipe_direction):
-	game.move_phase(swipe_direction)
-	commandHandler.process_stack()
-	game.post_turn_phase()
-	commandHandler.process_stack()
+	if playing:
+		game.move_phase(swipe_direction)
+		commandHandler.process_stack()
+		game.post_turn_phase()
+		commandHandler.process_stack()
 	
 func on_undo():
 	commandHandler.undo()
+	
+func on_new_game():
+	start_game()
+	
+func on_game_over():
+	playing = false
+	game_over_overlay.visible = true
 
 func start_game():
+	game_over_overlay.visible = false
+	map.init_map(MAP_SIZE)
 	var value_map = mapPopulateStrat.populate_map(MAP_SIZE,
 		STARTING_PIECE_COUNT,
 		POSSIBLE_STARING_PIECES)
 	
 	place_pieces(value_map)
+	playing = true
 
 func place_pieces(value_map: Array):
 	for y in value_map.size():
