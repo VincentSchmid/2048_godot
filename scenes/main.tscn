@@ -46,3 +46,23 @@ text = "UNDO"
 
 [node name="SwipeHandler" type="Node" parent="Controller"]
 script = ExtResource( 7 )
+
+[node name="GameOver" type="ColorRect" parent="Controller"]
+visible = false
+margin_left = 6.0
+margin_top = 860.0
+margin_right = 1164.0
+margin_bottom = 1355.0
+
+[node name="Label" type="Label" parent="Controller/GameOver"]
+margin_left = 149.0
+margin_top = 94.0
+margin_right = 365.0
+margin_bottom = 168.0
+rect_scale = Vector2( 4, 4 )
+size_flags_stretch_ratio = 0.76
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "GAME OVER"
+align = 1
+valign = 1

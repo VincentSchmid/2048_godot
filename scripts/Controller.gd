@@ -13,6 +13,7 @@ var WINDOW_HEIGHT = ProjectSettings.get_setting("display/window/size/height")
 var WINDOW_WIDTH = ProjectSettings.get_setting("display/window/size/width")
 
 onready var undo_button = get_node("Undo")
+onready var game_over_overlay = get_node("GameOver")
 onready var new_game_button = get_node("NewGame")
 onready var SwipeHandler = get_node("SwipeHandler")
 onready var map = get_node("Board")
@@ -53,10 +54,11 @@ func _process(delta):
 		emit_signal("game_over")
 
 func on_swipe(swipe_direction):
-	game.move_phase(swipe_direction)
-	commandHandler.process_stack()
-	game.post_turn_phase()
-	commandHandler.process_stack()
+	if playing:
+		game.move_phase(swipe_direction)
+		commandHandler.process_stack()
+		game.post_turn_phase()
+		commandHandler.process_stack()
 	
 func on_undo():
 	commandHandler.undo()
@@ -66,9 +68,10 @@ func on_new_game():
 	
 func on_game_over():
 	playing = false
-	print("game over")
+	game_over_overlay.visible = true
 
 func start_game():
+	game_over_overlay.visible = false
 	map.init_map(MAP_SIZE)
 	var value_map = mapPopulateStrat.populate_map(MAP_SIZE,
 		STARTING_PIECE_COUNT,
