@@ -71,10 +71,6 @@ func move_phase(direction):
 				_turnCommand))
 
 func post_turn_phase():
-	if _map.is_full():
-		# check_possible_actions
-		pass
-
 	for i in processing_stack.size():
 		var piece = processing_stack[i]["piece"]
 		if piece != null:
@@ -92,6 +88,22 @@ func post_turn_phase():
 	
 	if _turnCommand.has_commands:
 		_commandHandler.add(_turnCommand)
+
+func is_game_over():
+	return _map.is_full() and not has_equal_value_neighbour()
+
+func has_equal_value_neighbour():
+	populate_processing_stack(Enums.Direction.UP)
+	for i in processing_stack.size():
+		var piece = processing_stack[i]["piece"]
+		for direction in Enums.Direction.size():
+			var neighboring_pos = piece.board_position + get_check_array(direction)
+			if _map.is_on_map(neighboring_pos) and _map.get_value(neighboring_pos) == piece.value:
+				print(piece.board_position, piece.value)
+				print(neighboring_pos, _map.get_value(neighboring_pos))
+				return true
+
+	return false
 
 func populate_processing_stack(direction):
 	var check_columns = false

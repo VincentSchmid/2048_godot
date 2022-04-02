@@ -21,6 +21,9 @@ onready var rng_gen = RngGen.new(UNDO_COUNT, POSSIBLE_STARING_PIECES, map)
 var commandHandler: CommandHandler
 var game: Game
 
+var playing: bool
+
+signal game_over()
 
 func _ready() -> void:
 	ProjectSettings.set("2048/layout/margin", MARGIN)
@@ -39,9 +42,14 @@ func _ready() -> void:
 
 	SwipeHandler.connect("swiped", self, "on_swipe")
 	undo_button.connect("pressed", self, "on_undo")
+	self.connect("game_over", self, "on_game_over")
 	map.init_map(MAP_SIZE)
 	start_game()
 	
+func _process(delta):
+	if playing and game.is_game_over():
+		emit_signal("game_over")
+
 func on_swipe(swipe_direction):
 	game.move_phase(swipe_direction)
 	commandHandler.process_stack()
@@ -50,8 +58,13 @@ func on_swipe(swipe_direction):
 	
 func on_undo():
 	commandHandler.undo()
+	
+func on_game_over():
+	playing = false
+	print("game over")
 
 func start_game():
+	playing = true
 	var value_map = mapPopulateStrat.populate_map(MAP_SIZE,
 		STARTING_PIECE_COUNT,
 		POSSIBLE_STARING_PIECES)
