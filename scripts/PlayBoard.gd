@@ -5,7 +5,6 @@ class_name PlayBoard
 # [0, 0] is top left
 
 var _map_size
-var placed_pieces = 0
 var map: Array = []
 var garbage_pieces = []
 onready var rng = RandomNumberGenerator.new()
@@ -45,6 +44,12 @@ func set_piece(position: Vector2, piece):
 
 func get_piece(position: Vector2):
 	return map[position.y][position.x]
+	
+func get_value(position: Vector2):
+	if not is_on_map(position):
+		return null
+
+	return get_piece(position).value
 	
 func is_mergeable(position: Vector2, value) -> bool:
 	if not is_on_map(position):
