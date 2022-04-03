@@ -1,0 +1,18 @@
+[remap]
+
+importer="texture_atlas"
+type="Texture"
+path="res://.import/1024.png-bfca30357dcbafe6189051b0c01a9800.res"
+group_file="res://images/number_atlas.png"
+valid=true
+[deps]
+
+
+source_file="res://images/numbers/1024.png"
+dest_files=[ "res://.import/1024.png-bfca30357dcbafe6189051b0c01a9800.res" ]
+
+[params]
+
+atlas_file="res://images/number_atlas.png"
+import_mode=0
+crop_to_region=false

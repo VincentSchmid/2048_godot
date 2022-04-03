@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Enums.gd"
 }, {
+"base": "MapPopulateStrategy",
+"class": "FullBoardTest",
+"language": "GDScript",
+"path": "res://scripts/MapPopulateStrats/FullBoardTest.gd"
+}, {
 "base": "Node",
 "class": "Game",
 "language": "GDScript",
@@ -84,6 +89,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/MapPopulateStrats/RandomMap.gd"
 }, {
+"base": "Node",
+"class": "RngGen",
+"language": "GDScript",
+"path": "res://scripts/RngGen.gd"
+}, {
 "base": "Command",
 "class": "SetValueCommand",
 "language": "GDScript",
@@ -100,6 +110,7 @@ _global_script_class_icons={
 "CommandHandler": "",
 "DeleteCommand": "",
 "Enums": "",
+"FullBoardTest": "",
 "Game": "",
 "MapPopulateStrategy": "",
 "MergeCommand": "",
@@ -110,6 +121,7 @@ _global_script_class_icons={
 "PieceFactory": "",
 "PlayBoard": "",
 "RandomMap": "",
+"RngGen": "",
 "SetValueCommand": "",
 "TurnCommand": ""
 }

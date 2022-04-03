@@ -18,7 +18,7 @@ var _is_moving = false
 signal arrived()
 
 func init(new_board_position: Vector2, value: int):
-	value_label = get_child(1)
+	value_label = get_child(0)
 	set_value(value)
 	board_position = new_board_position
 	position = get_pixel_position(board_position)
