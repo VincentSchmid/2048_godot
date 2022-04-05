@@ -12,6 +12,7 @@ var _commandHandler: CommandHandler
 var _piece_parent: Node
 var _piece_has_moved = false
 var _turnCommand: TurnCommand
+var game_over: bool
 
 var processing_stack: Array
 
@@ -29,6 +30,7 @@ func _init(
 	_rng_gen = rng_gen
 	_piece_parent = piece_parent
 	_commandHandler = commandHandler
+	game_over = false
 
 func move_phase(direction):
 	populate_processing_stack(direction)
@@ -87,9 +89,10 @@ func post_turn_phase():
 			0))
 	
 	if _turnCommand.has_commands:
+		_turnCommand.add(CheckGameOverCommand.new(self))
 		_commandHandler.add(_turnCommand)
 
-func is_game_over():
+func check_game_over():
 	return _map.is_full() and not has_equal_value_neighbour()
 
 func has_equal_value_neighbour():

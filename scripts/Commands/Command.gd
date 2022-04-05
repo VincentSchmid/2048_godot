@@ -9,6 +9,7 @@ enum CommandTypes {
 	DELETE,
 	MERGE,
 	SET_VALUE,
+	CHECK_GAME_OVER
 }
 
 func execute():

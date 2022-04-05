@@ -50,7 +50,7 @@ func _ready() -> void:
 	start_game()
 	
 func _process(delta):
-	if playing and game.is_game_over():
+	if playing and game.game_over:
 		emit_signal("game_over")
 
 func on_swipe(swipe_direction):
