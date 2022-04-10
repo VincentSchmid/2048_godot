@@ -14,10 +14,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Commands/AddPieceCommand.gd"
 }, {
+"base": "Command",
+"class": "CheckGameOverCommand",
+"language": "GDScript",
+"path": "res://scripts/Commands/CheckGameOverCommand.gd"
+}, {
 "base": "Node",
 "class": "Command",
 "language": "GDScript",
 "path": "res://scripts/Commands/Command.gd"
+}, {
+"base": "Node",
+"class": "CommandFactory",
+"language": "GDScript",
+"path": "res://scripts/Commands/CommandFactory.gd"
 }, {
 "base": "Node",
 "class": "CommandHandler",
@@ -106,7 +116,9 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "AddPieceCommand": "",
+"CheckGameOverCommand": "",
 "Command": "",
+"CommandFactory": "",
 "CommandHandler": "",
 "DeleteCommand": "",
 "Enums": "",
