@@ -91,4 +91,4 @@ func place_pieces(value_map: Array):
 				place_piece(Vector2(x, y), value)
 
 func place_piece(board_position: Vector2, value: int):
-	AddPieceCommand.new(null, piece_factory, map, piece_factory, board_position, value).execute()
+	commadFactory.create_add_piece_command(board_position, value).execute()
