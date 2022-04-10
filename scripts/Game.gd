@@ -3,42 +3,40 @@ extends Node
 
 class_name Game
 
-var _map: PlayBoard
-var _add_piece_after_move: bool
-var _map_size: int
-var _rng_gen: RngGen
-var _check_direction: Vector2
-var _commandHandler: CommandHandler
-var _piece_parent: Node
-var _piece_has_moved = false
-var _turnCommand: TurnCommand
 var game_over: bool
 
-var processing_stack: Array
+var _add_piece_after_move: bool
+var _map_size: int
+var _map: PlayBoard
+var _commandHandler: CommandHandler
+var _commandFactory: CommandFactory
+
+var _turnCommand: TurnCommand
+var _piece_has_moved = false
+var _check_direction: Vector2
+var _processing_stack: Array
 
 func _init(
 	add_piece_after_move: bool,
 	map_size: int,
 	map: PlayBoard,
-	rng_gen: RngGen,
 	commandHandler: CommandHandler,
-	piece_parent: Node):
+	commandFactory: CommandFactory):
 
 	_add_piece_after_move = add_piece_after_move
 	_map = map
 	_map_size = map_size
-	_rng_gen = rng_gen
-	_piece_parent = piece_parent
 	_commandHandler = commandHandler
+	_commandFactory = commandFactory
 	game_over = false
 
 func move_phase(direction):
 	populate_processing_stack(direction)
-	_turnCommand = TurnCommand.new()
+	_turnCommand = _commandFactory.create_turn_command()
 
-	for i in processing_stack.size():
-		var board_position = processing_stack[i]["board_position"]
-		var piece = processing_stack[i]["piece"]
+	for i in _processing_stack.size():
+		var board_position = _processing_stack[i]["board_position"]
+		var piece = _processing_stack[i]["piece"]
 		var next_board_position = board_position
 		
 		_check_direction = get_check_array(direction)
@@ -50,11 +48,9 @@ func move_phase(direction):
 			next_board_position += _check_direction
 		
 		if board_position != next_board_position:
-			_turnCommand.add(MoveCommand.new(
-				board_position,
+			_turnCommand.add(_commandFactory.create_move_command(board_position, 
 				next_board_position,
-				piece,
-				_map))
+				piece))
 		
 		# MERGING
 		
@@ -64,32 +60,23 @@ func move_phase(direction):
 		if _map.is_mergeable(next_board_position, piece.value):
 			_piece_has_moved = true
 			
-			_turnCommand.add(MergeCommand.new(board_position, 
+			_turnCommand.add(_commandFactory.create_merge_command(board_position, 
 				next_board_position, 
 				piece, 
-				_map.get_piece(next_board_position),
-				_piece_parent,
-				_map,
 				_turnCommand))
 
 func post_turn_phase():
-	for i in processing_stack.size():
-		var piece = processing_stack[i]["piece"]
+	for i in _processing_stack.size():
+		var piece = _processing_stack[i]["piece"]
 		if piece != null:
 			piece.has_merged = false
 	
 	if _piece_has_moved and _add_piece_after_move:
 		_piece_has_moved = false
-		_turnCommand.add(AddPieceCommand.new(
-			_rng_gen,
-			_piece_parent,
-			_map,
-			_piece_parent,
-			Vector2(),
-			0))
+		_turnCommand.add(_commandFactory.create_add_random_piece_command())
 	
 	if _turnCommand.has_commands:
-		_turnCommand.add(CheckGameOverCommand.new(self))
+		_turnCommand.add(_commandFactory.create_check_game_over_command(self))
 		_commandHandler.add(_turnCommand)
 
 func check_game_over():
@@ -97,8 +84,8 @@ func check_game_over():
 
 func has_equal_value_neighbour():
 	populate_processing_stack(Enums.Direction.UP)
-	for i in processing_stack.size():
-		var piece = processing_stack[i]["piece"]
+	for i in _processing_stack.size():
+		var piece = _processing_stack[i]["piece"]
 		for direction in Enums.Direction.size():
 			var neighboring_pos = piece.board_position + get_check_array(direction)
 			if _map.is_on_map(neighboring_pos) and _map.get_value(neighboring_pos) == piece.value:
@@ -111,10 +98,9 @@ func has_equal_value_neighbour():
 func populate_processing_stack(direction):
 	var check_columns = false
 	var check_in_order = false
-	processing_stack = []
+	_processing_stack = []
 	
 	match direction:
-		
 		Enums.Direction.LEFT:
 			check_columns = true
 			check_in_order = true
@@ -143,7 +129,7 @@ func populate_processing_stack(direction):
 			for y in range(col.size()):
 				var piece = col[y]
 				if piece != null:
-					processing_stack.append({
+					_processing_stack.append({
 						"board_position": Vector2(x, y),
 						"piece": piece})
 	
@@ -153,7 +139,7 @@ func populate_processing_stack(direction):
 			for x in range(row.size()):
 				var piece = row[x]
 				if piece != null:
-					processing_stack.append({
+					_processing_stack.append({
 						"board_position": Vector2(x, y),
 						"piece": piece})
 

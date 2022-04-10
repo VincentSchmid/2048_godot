@@ -22,6 +22,7 @@ onready var mapPopulateStrat = RandomMap.new()
 onready var rng_gen = RngGen.new(UNDO_COUNT, POSSIBLE_STARING_PIECES, map)
 var commandHandler: CommandHandler
 var game: Game
+var commadFactory: CommandFactory
 
 var playing: bool
 
@@ -34,13 +35,13 @@ func _ready() -> void:
 	ProjectSettings.set("2048/layout/map_size", MAP_SIZE)
 	
 	commandHandler = CommandHandler.new(UNDO_COUNT)
+	commadFactory = CommandFactory.new(rng_gen, map, piece_factory)
 	game = Game.new(
 		ADD_PIECE_AFTER_MOVE,
 		MAP_SIZE,
-		map, 
-		rng_gen,
+		map,
 		commandHandler,
-		piece_factory)
+		commadFactory)
 
 	SwipeHandler.connect("swiped", self, "on_swipe")
 	undo_button.connect("pressed", self, "on_undo")
@@ -90,4 +91,4 @@ func place_pieces(value_map: Array):
 				place_piece(Vector2(x, y), value)
 
 func place_piece(board_position: Vector2, value: int):
-	AddPieceCommand.new(null, piece_factory, map, piece_factory, board_position, value).execute()
+	commadFactory.create_add_piece_command(board_position, value).execute()
