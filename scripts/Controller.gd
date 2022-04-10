@@ -2,7 +2,7 @@ extends Node
 
 
 const MAP_SIZE = 4
-const PIECE_SIZE = 200
+const PIECE_SCALE = 0.5
 const MARGIN = 50.0
 const STARTING_PIECE_COUNT = 2
 const POSSIBLE_STARING_PIECES = [2, 4]
@@ -29,6 +29,7 @@ var playing: bool
 signal game_over()
 
 func _ready() -> void:
+	piece_factory.set_piece_scale(PIECE_SCALE)
 	ProjectSettings.set("2048/layout/margin", MARGIN)
 	ProjectSettings.set("2048/layout/window_height", WINDOW_HEIGHT)
 	ProjectSettings.set("2048/layout/map_pixel_size", WINDOW_WIDTH)
