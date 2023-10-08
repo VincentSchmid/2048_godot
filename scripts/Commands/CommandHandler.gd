@@ -22,7 +22,7 @@ func add(command: Command):
 	_command_stack.push_back(command)
 	
 func process_stack():
-	while not _command_stack.empty():
+	while not _command_stack.is_empty():
 		var command = _command_stack.pop_front()
 		command.execute()
 		_add_past_command(command)

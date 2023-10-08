@@ -99,30 +99,26 @@ func populate_processing_stack(direction):
 	var check_columns = false
 	var check_in_order = false
 	_processing_stack = []
-	
+
 	match direction:
 		Enums.Direction.LEFT:
 			check_columns = true
 			check_in_order = true
-			continue
-			
+
 		Enums.Direction.RIGHT:
 			check_columns = true
 			check_in_order = false
-			continue
-		
+
 		Enums.Direction.UP:
 			check_columns = false
 			check_in_order = true
-			continue
-			
+
 		Enums.Direction.DOWN:
 			check_columns = false
 			check_in_order = false
-			continue
-	
+
 	var check_order = range(_map_size) if check_in_order else range(_map_size-1, -1, -1)
-	
+
 	if check_columns:
 		for x in check_order: # could run in parallel
 			var col = _map.get_column(x)
@@ -132,7 +128,7 @@ func populate_processing_stack(direction):
 					_processing_stack.append({
 						"board_position": Vector2(x, y),
 						"piece": piece})
-	
+
 	else:
 		for y in check_order: # could run in parallel
 			var row = _map.get_row(y)

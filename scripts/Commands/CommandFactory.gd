@@ -3,10 +3,7 @@ extends Node
 class_name CommandFactory
 
 var command_type = Command.CommandTypes.ADD
-var _position: Vector2
 var _rng_gen: RngGen
-var _value: int
-var _piece: Node
 var _map: PlayBoard
 var _piece_factory: PieceFactory
 

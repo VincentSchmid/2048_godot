@@ -7,7 +7,7 @@ class_name PlayBoard
 var _map_size
 var map: Array = []
 var garbage_pieces = []
-onready var rng = RandomNumberGenerator.new()
+@onready var rng = RandomNumberGenerator.new()
 
 var _moving = []
 
@@ -15,7 +15,7 @@ func init_map(map_size):
 	_map_size = map_size
 	rng.randomize()
 
-	if not map.empty():
+	if not map.is_empty():
 		clear_map()
 
 	map = [];
@@ -108,5 +108,5 @@ func get_random_free_position() -> Vector2:
 	
 func wait_for_move_complete(piece):
 	_moving.append(1)
-	yield(piece, "arrived")
+	await piece.arrived
 	_moving.pop_front()

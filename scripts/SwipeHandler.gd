@@ -31,7 +31,7 @@ func _input(event):
 		current_touch_pos = event.position
 		
 
-func _process(delta):
+func _process(_delta):
 	if listen_to_swipe and start_touch_pos.distance_to(current_touch_pos) >= MIN_DRAG_DISTANCE:
 		var swipe_direction = _get_swipe_direction(start_touch_pos, current_touch_pos)
 		listen_to_swipe = false
@@ -43,7 +43,7 @@ func _process(delta):
 func _get_swipe_direction(start_touch, end_touch) -> int:
 	var difference = start_touch - end_touch;
 	var distance = start_touch.distance_to(end_touch)
-	var angle = rad2deg(atan2(difference.x, difference.y));
+	var angle = rad_to_deg(atan2(difference.x, difference.y));
 
 	if distance >= MIN_DRAG_DISTANCE:
 		if _is_in_range(angle, DIRECTION_LEFT, ANGLE_TOLERANCE_PERCENTAGE):
