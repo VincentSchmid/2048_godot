@@ -1,67 +1,55 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://cv445yagg4yh5"]
 
-[ext_resource path="res://font/firaCode_regular.tres" type="DynamicFont" id=1]
-[ext_resource path="res://scripts/SwipeHandler.gd" type="Script" id=7]
-[ext_resource path="res://scripts/Controller.gd" type="Script" id=9]
-[ext_resource path="res://scripts/PlayBoard.gd" type="Script" id=10]
-[ext_resource path="res://scripts/PieceFactory.gd" type="Script" id=11]
+[ext_resource type="Script" path="res://scripts/SwipeHandler.gd" id="7"]
+[ext_resource type="Script" path="res://scripts/Controller.gd" id="9"]
+[ext_resource type="Script" path="res://scripts/PlayBoard.gd" id="10"]
+[ext_resource type="Script" path="res://scripts/PieceFactory.gd" id="11"]
 
 [node name="main" type="Node2D"]
 
 [node name="Background" type="ColorRect" parent="."]
-margin_right = 1170.0
-margin_bottom = 2532.0
-color = Color( 0.105882, 0.113725, 0.117647, 1 )
+color = Color(0.105882, 0.113725, 0.117647, 1)
 
 [node name="Controller" type="Node" parent="."]
-script = ExtResource( 9 )
+script = ExtResource("9")
 
 [node name="Board" type="ColorRect" parent="Controller"]
 visible = false
-margin_top = 585.0
-margin_right = 1170.0
-margin_bottom = 1755.0
-rect_pivot_offset = Vector2( 264, 96 )
-color = Color( 0.156863, 0.152941, 0.152941, 1 )
-script = ExtResource( 10 )
+color = Color(0.156863, 0.152941, 0.152941, 1)
+script = ExtResource("10")
 
 [node name="Pieces" type="Node" parent="Controller"]
-script = ExtResource( 11 )
+script = ExtResource("11")
 
 [node name="NewGame" type="Button" parent="Controller"]
-margin_left = 893.0
-margin_top = 310.0
-margin_right = 1097.0
-margin_bottom = 415.0
-custom_fonts/font = ExtResource( 1 )
+offset_left = 793.0
+offset_top = 52.0
+offset_right = 904.0
+offset_bottom = 100.0
+scale = Vector2(3, 3)
 text = "NEW GAME"
 
 [node name="Undo" type="Button" parent="Controller"]
-margin_left = 891.0
-margin_top = 95.0
-margin_right = 1070.0
-margin_bottom = 200.0
-custom_fonts/font = ExtResource( 1 )
+offset_left = 800.0
+offset_top = 230.0
+offset_right = 907.0
+offset_bottom = 276.0
+scale = Vector2(3, 3)
 text = "UNDO"
 
 [node name="SwipeHandler" type="Node" parent="Controller"]
-script = ExtResource( 7 )
+script = ExtResource("7")
 
 [node name="GameOver" type="ColorRect" parent="Controller"]
-margin_left = 6.0
-margin_top = 1870.0
-margin_right = 1164.0
-margin_bottom = 2365.0
 
 [node name="Label" type="Label" parent="Controller/GameOver"]
-margin_left = 149.0
-margin_top = 94.0
-margin_right = 365.0
-margin_bottom = 168.0
-rect_scale = Vector2( 4, 4 )
+layout_mode = 0
+offset_left = 10.0
+offset_top = 2041.0
+offset_right = 124.0
+offset_bottom = 2088.0
+scale = Vector2(10, 10)
 size_flags_stretch_ratio = 0.76
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 1 )
 text = "GAME OVER"
-align = 1
-valign = 1
+horizontal_alignment = 1
+vertical_alignment = 1

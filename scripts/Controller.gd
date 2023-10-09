@@ -12,14 +12,14 @@ const UNDO_COUNT = 5
 var WINDOW_HEIGHT = ProjectSettings.get_setting("display/window/size/height")
 var WINDOW_WIDTH = ProjectSettings.get_setting("display/window/size/width")
 
-onready var undo_button = get_node("Undo")
-onready var game_over_overlay = get_node("GameOver")
-onready var new_game_button = get_node("NewGame")
-onready var SwipeHandler = get_node("SwipeHandler")
-onready var map = get_node("Board")
-onready var piece_factory = get_node("Pieces")
-onready var mapPopulateStrat = RandomMap.new()
-onready var rng_gen = RngGen.new(UNDO_COUNT, POSSIBLE_STARING_PIECES, map)
+@onready var undo_button = get_node("Undo")
+@onready var game_over_overlay = get_node("GameOver")
+@onready var new_game_button = get_node("NewGame")
+@onready var SwipeHandler = get_node("SwipeHandler")
+@onready var map = get_node("Board")
+@onready var piece_factory = get_node("Pieces")
+@onready var mapPopulateStrat = RandomMap.new()
+@onready var rng_gen = RngGen.new(UNDO_COUNT, POSSIBLE_STARING_PIECES, map)
 var commandHandler: CommandHandler
 var game: Game
 var commadFactory: CommandFactory
@@ -44,14 +44,14 @@ func _ready() -> void:
 		commandHandler,
 		commadFactory)
 
-	SwipeHandler.connect("swiped", self, "on_swipe")
-	undo_button.connect("pressed", self, "on_undo")
-	new_game_button.connect("pressed", self, "on_new_game")
-	self.connect("game_over", self, "on_game_over")
+	SwipeHandler.swiped.connect(self.on_swipe)
+	undo_button.pressed.connect(self.on_undo)
+	new_game_button.pressed.connect(self.on_new_game)
+	self.game_over.connect(self.on_game_over)
 	
 	start_game()
 	
-func _process(delta):
+func _process(_delta):
 	if playing and game.game_over:
 		emit_signal("game_over")
 

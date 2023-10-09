@@ -22,7 +22,7 @@ func _init(from_board_postion: Vector2, to_board_position: Vector2, piece: Piece
 func execute():
 	_piece.next_board_position = _to_board_position
 	_piece.move()
-	yield(_piece, "arrived")
+	await _piece.arrived
 	emit_signal("completed")
 	
 func undo():

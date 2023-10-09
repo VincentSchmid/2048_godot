@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends PhysicsBody2D
 
 
 class_name Piece
@@ -17,11 +17,11 @@ var _is_moving = false
 
 signal arrived()
 
-func init(new_board_position: Vector2, value: int, piece_scale: float):
+func init(new_board_position: Vector2, new_value: int, piece_scale: float):
 	value_label = get_child(0)
-	set_value(value)
+	set_value(new_value)
 	board_position = new_board_position
-	position = get_pixel_position(board_position)
+	position = Piece.get_pixel_position(board_position)
 	scale.x = piece_scale
 	scale.y = piece_scale
 	_next_position = position
@@ -39,14 +39,14 @@ func set_value(new_value):
 	value_label.set_value(new_value)
 
 func move():
-	_next_position = get_pixel_position(next_board_position)
+	_next_position = Piece.get_pixel_position(next_board_position)
 	_is_moving = true
 	
-static func get_pixel_position(board_position: Vector2) -> Vector2:
+static func get_pixel_position(new_board_position: Vector2) -> Vector2:
 	var margin = ProjectSettings.get("2048/layout/margin")
 	var window_height = ProjectSettings.get("2048/layout/window_height")
 	var map_pixel_size = ProjectSettings.get("2048/layout/map_pixel_size")
 	var map_size = ProjectSettings.get("2048/layout/map_size")
 	
-	return Vector2(margin + (map_pixel_size - (2*margin)) / map_size * board_position.x,
-				 ((window_height - map_pixel_size) / 2) + margin + (map_pixel_size - (2*margin)) / map_size * board_position.y)
+	return Vector2(margin + (map_pixel_size - (2*margin)) / map_size * new_board_position.x,
+				 ((window_height - map_pixel_size) / 2) + margin + (map_pixel_size - (2*margin)) / map_size * new_board_position.y)

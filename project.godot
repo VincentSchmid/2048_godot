@@ -6,162 +6,43 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
-
-_global_script_classes=[ {
-"base": "Command",
-"class": "AddPieceCommand",
-"language": "GDScript",
-"path": "res://scripts/Commands/AddPieceCommand.gd"
-}, {
-"base": "Command",
-"class": "CheckGameOverCommand",
-"language": "GDScript",
-"path": "res://scripts/Commands/CheckGameOverCommand.gd"
-}, {
-"base": "Node",
-"class": "Command",
-"language": "GDScript",
-"path": "res://scripts/Commands/Command.gd"
-}, {
-"base": "Node",
-"class": "CommandFactory",
-"language": "GDScript",
-"path": "res://scripts/Commands/CommandFactory.gd"
-}, {
-"base": "Node",
-"class": "CommandHandler",
-"language": "GDScript",
-"path": "res://scripts/Commands/CommandHandler.gd"
-}, {
-"base": "Command",
-"class": "DeleteCommand",
-"language": "GDScript",
-"path": "res://scripts/Commands/DeleteCommand.gd"
-}, {
-"base": "Reference",
-"class": "Enums",
-"language": "GDScript",
-"path": "res://scripts/Enums.gd"
-}, {
-"base": "MapPopulateStrategy",
-"class": "FullBoardTest",
-"language": "GDScript",
-"path": "res://scripts/MapPopulateStrats/FullBoardTest.gd"
-}, {
-"base": "Node",
-"class": "Game",
-"language": "GDScript",
-"path": "res://scripts/Game.gd"
-}, {
-"base": "Node",
-"class": "MapPopulateStrategy",
-"language": "GDScript",
-"path": "res://scripts/MapPopulateStrats/MapPopulateStrategy.gd"
-}, {
-"base": "Command",
-"class": "MergeCommand",
-"language": "GDScript",
-"path": "res://scripts/Commands/MergeCommand.gd"
-}, {
-"base": "MapPopulateStrategy",
-"class": "MergeTest",
-"language": "GDScript",
-"path": "res://scripts/MapPopulateStrats/MergeTest.gd"
-}, {
-"base": "Command",
-"class": "MoveCommand",
-"language": "GDScript",
-"path": "res://scripts/Commands/MoveCommand.gd"
-}, {
-"base": "MapPopulateStrategy",
-"class": "MoveTest",
-"language": "GDScript",
-"path": "res://scripts/MapPopulateStrats/MoveTest.gd"
-}, {
-"base": "KinematicBody2D",
-"class": "Piece",
-"language": "GDScript",
-"path": "res://scripts/Piece.gd"
-}, {
-"base": "Node",
-"class": "PieceFactory",
-"language": "GDScript",
-"path": "res://scripts/PieceFactory.gd"
-}, {
-"base": "Node",
-"class": "PlayBoard",
-"language": "GDScript",
-"path": "res://scripts/PlayBoard.gd"
-}, {
-"base": "MapPopulateStrategy",
-"class": "RandomMap",
-"language": "GDScript",
-"path": "res://scripts/MapPopulateStrats/RandomMap.gd"
-}, {
-"base": "Node",
-"class": "RngGen",
-"language": "GDScript",
-"path": "res://scripts/RngGen.gd"
-}, {
-"base": "Command",
-"class": "SetValueCommand",
-"language": "GDScript",
-"path": "res://scripts/Commands/SetValueCommand.gd"
-}, {
-"base": "Command",
-"class": "TurnCommand",
-"language": "GDScript",
-"path": "res://scripts/Commands/TurnCommand.gd"
-} ]
-_global_script_class_icons={
-"AddPieceCommand": "",
-"CheckGameOverCommand": "",
-"Command": "",
-"CommandFactory": "",
-"CommandHandler": "",
-"DeleteCommand": "",
-"Enums": "",
-"FullBoardTest": "",
-"Game": "",
-"MapPopulateStrategy": "",
-"MergeCommand": "",
-"MergeTest": "",
-"MoveCommand": "",
-"MoveTest": "",
-"Piece": "",
-"PieceFactory": "",
-"PlayBoard": "",
-"RandomMap": "",
-"RngGen": "",
-"SetValueCommand": "",
-"TurnCommand": ""
-}
+config_version=5
 
 [application]
 
 config/name="2048_new"
 run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.1")
 config/icon="res://icon.png"
 
 [display]
 
+window/size/viewport_width=1170
+window/size/viewport_height=2532
+window/stretch/mode="viewport"
+window/handheld/orientation=1
 window/size/width=1170
 window/size/height=2532
 window/size/test_width=288
 window/size/test_height=512
-window/handheld/orientation="portrait"
-window/stretch/mode="2d"
 window/handheld/emulate_touchscreen=true
+
+[dotnet]
+
+project/assembly_name="2048_new"
 
 [input]
 
 ui_touch={
 "deadzone": 0.5,
-"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
- ]
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
 }
 
 [input_devices]
 
 pointing/emulate_touch_from_mouse=true
+
+[rendering]
+
+textures/vram_compression/import_etc2_astc=true

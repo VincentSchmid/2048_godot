@@ -10,7 +10,6 @@ var _moving_piece: Piece
 var _stationary_piece: Piece
 var _parent: Node
 var _map: PlayBoard
-var _moveCommand: MoveCommand
 var _deleteCommand: DeleteCommand
 var _setValueCommand: SetValueCommand
 
