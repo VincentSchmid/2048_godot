@@ -22,17 +22,19 @@ script = ExtResource("10")
 script = ExtResource("11")
 
 [node name="NewGame" type="Button" parent="Controller"]
-offset_left = 10.0
-offset_top = 6.0
-offset_right = 105.0
-offset_bottom = 37.0
+offset_left = 793.0
+offset_top = 52.0
+offset_right = 904.0
+offset_bottom = 100.0
+scale = Vector2(3, 3)
 text = "NEW GAME"
 
 [node name="Undo" type="Button" parent="Controller"]
-offset_left = 230.0
-offset_top = 5.0
-offset_right = 287.0
-offset_bottom = 36.0
+offset_left = 800.0
+offset_top = 230.0
+offset_right = 907.0
+offset_bottom = 276.0
+scale = Vector2(3, 3)
 text = "UNDO"
 
 [node name="SwipeHandler" type="Node" parent="Controller"]
@@ -42,9 +44,12 @@ script = ExtResource("7")
 
 [node name="Label" type="Label" parent="Controller/GameOver"]
 layout_mode = 0
-offset_left = 113.0
-offset_top = 161.0
-offset_right = 205.0
-offset_bottom = 187.0
+offset_left = 10.0
+offset_top = 2041.0
+offset_right = 124.0
+offset_bottom = 2088.0
+scale = Vector2(10, 10)
 size_flags_stretch_ratio = 0.76
 text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
