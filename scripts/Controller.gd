@@ -2,7 +2,7 @@ extends Node
 
 
 const MAP_SIZE = 4
-const PIECE_SCALE = 4 * 0.5 / MAP_SIZE
+const PIECE_SCALE = 2.0 / MAP_SIZE
 const MARGIN = 50.0
 const STARTING_PIECE_COUNT = 2
 const POSSIBLE_STARING_PIECES = [2, 4]
